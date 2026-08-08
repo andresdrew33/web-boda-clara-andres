@@ -21,6 +21,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 18px;
 }
 
 body {
@@ -28,6 +29,7 @@ body {
   background-color: #f2f7f0;
   color: #2a3d2c;
   -webkit-font-smoothing: antialiased;
+  line-height: 1.65;
 }
 
 ::-webkit-scrollbar {

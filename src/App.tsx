@@ -49,7 +49,7 @@ function LeafLeft({ className = '' }: { className?: string }) {
   return (
     <svg viewBox="0 0 120 200" fill="none" className={className} aria-hidden>
       <path d="M60 190 C20 150 0 100 10 40 C30 60 70 80 80 140 C85 110 70 60 40 20 C90 30 120 90 100 160 Z" fill="#c4ddbf" opacity="0.55" />
-      <path d="M60 190 C40 160 35 120 45 80" stroke="#8aad87" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+      <path d="M60 190 C40 160 35 120 45 80" stroke="#557a59" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
     </svg>
   )
 }
@@ -58,7 +58,7 @@ function LeafRight({ className = '' }: { className?: string }) {
   return (
     <svg viewBox="0 0 120 200" fill="none" className={className} aria-hidden>
       <path d="M60 190 C100 150 120 100 110 40 C90 60 50 80 40 140 C35 110 50 60 80 20 C30 30 0 90 20 160 Z" fill="#c4ddbf" opacity="0.55" />
-      <path d="M60 190 C80 160 85 120 75 80" stroke="#8aad87" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+      <path d="M60 190 C80 160 85 120 75 80" stroke="#557a59" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
     </svg>
   )
 }
@@ -66,11 +66,11 @@ function LeafRight({ className = '' }: { className?: string }) {
 function FloralDivider() {
   return (
     <div className="flex items-center justify-center gap-3 my-2" aria-hidden>
-      <span className="text-[#8aad87] text-lg opacity-60">✦</span>
-      <span className="block w-16 h-px bg-gradient-to-r from-transparent via-[#8aad87] to-transparent opacity-60" />
-      <span className="text-[#8aad87] text-base opacity-80">❧</span>
-      <span className="block w-16 h-px bg-gradient-to-r from-transparent via-[#8aad87] to-transparent opacity-60" />
-      <span className="text-[#8aad87] text-lg opacity-60">✦</span>
+      <span className="text-[#557a59] text-lg opacity-60">✦</span>
+      <span className="block w-16 h-px bg-gradient-to-r from-transparent via-[#557a59] to-transparent opacity-60" />
+      <span className="text-[#557a59] text-base opacity-80">❧</span>
+      <span className="block w-16 h-px bg-gradient-to-r from-transparent via-[#557a59] to-transparent opacity-60" />
+      <span className="text-[#557a59] text-lg opacity-60">✦</span>
     </div>
   )
 }
@@ -88,7 +88,7 @@ function Section({ id, className = '', children }: { id?: string; className?: st
 function SectionTitle({ sub, title }: { sub: string; title: string }) {
   return (
     <div className="text-center mb-12 reveal">
-      <p className="text-[#6f9570] uppercase tracking-[0.25em] text-xs font-semibold mb-3">{sub}</p>
+      <p className="text-[#557a59] uppercase tracking-[0.25em] text-xs font-semibold mb-3">{sub}</p>
       <h2 className="font-display text-4xl md:text-5xl text-[#2a3d2c] font-light italic leading-tight">{title}</h2>
       <div className="section-divider mt-5" />
     </div>
@@ -210,12 +210,12 @@ function Hero() {
         <h1 className="font-display text-6xl md:text-8xl text-[#2a3d2c] font-light leading-none mb-10">Andrés</h1>
         <FloralDivider />
         <p className="mt-8 text-[#3e5c41] tracking-widest text-sm font-medium uppercase">12 · Junio · 2027</p>
-        <p className="text-[#6f9570] text-sm mt-1">Poza de la Sal, Burgos</p>
+        <p className="text-[#557a59] text-sm mt-1">Poza de la Sal, Burgos</p>
       </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <p className="text-[#8aad87] text-[10px] uppercase tracking-widest">Desliza para enterarte</p>
-        <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#8aad87]">
+        <p className="text-[#557a59] text-xs uppercase tracking-widest">Desliza para enterarte</p>
+        <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#557a59]">
           <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
@@ -236,7 +236,7 @@ function Countdown() {
   return (
     <section ref={ref} className="py-16 px-5 bg-[#557a59]">
       <div className="max-w-3xl mx-auto text-center">
-        <p className="reveal text-[#c4ddbf] uppercase tracking-[0.3em] text-xs mb-8">Faltan tan solo</p>
+        <p className="reveal text-white/90 uppercase tracking-[0.3em] text-xs mb-8">Faltan tan solo</p>
         <div className="reveal reveal-delay-1 grid grid-cols-4 gap-3 md:gap-6">
           {units.map(({ value, label }) => (
             <div key={label} className="flex flex-col items-center">
@@ -245,11 +245,11 @@ function Countdown() {
                   {String(value).padStart(2, '0')}
                 </span>
               </div>
-              <p className="text-[#c4ddbf] text-[10px] uppercase tracking-widest mt-2">{label}</p>
+              <p className="text-white/90 text-xs uppercase tracking-widest mt-2">{label}</p>
             </div>
           ))}
         </div>
-        <p className="reveal reveal-delay-2 text-[#c4ddbf]/60 text-xs mt-8">12 de Junio de 2027 · 12:30h</p>
+        <p className="reveal reveal-delay-2 text-white/70 text-xs mt-8">12 de Junio de 2027 · 12:30h</p>
       </div>
     </section>
   )
@@ -402,7 +402,7 @@ function PhotoCarousel() {
   return (
     <section ref={sectionRef} className="py-16 bg-[#f2f7f0]">
       <div className="text-center mb-10 px-5 reveal">
-        <p className="text-[#6f9570] uppercase tracking-[0.25em] text-xs font-semibold mb-3">Momentos juntos</p>
+        <p className="text-[#557a59] uppercase tracking-[0.25em] text-xs font-semibold mb-3">Momentos juntos</p>
         <h2 className="font-display text-4xl md:text-5xl text-[#2a3d2c] font-light italic leading-tight">Nuestra galería</h2>
         <div className="section-divider mt-5" />
       </div>
@@ -482,7 +482,7 @@ function WeddingInfo() {
     <Section id="info" className="bg-[#fdfaf5]">
       <div className="max-w-3xl mx-auto">
         <SectionTitle sub="Detalles del día" title="Todo lo que necesitas saber"/>
-        <p className="reveal text-center text-[#6d8c70] text-sm leading-relaxed max-w-lg mx-auto mb-10">
+        <p className="reveal text-center text-[#3e5c41] text-sm leading-relaxed max-w-lg mx-auto mb-10">
           Aquí tienes toda la información para que no se te escape ningún detalle de nuestro gran día.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -494,7 +494,7 @@ function WeddingInfo() {
               <div className="flex justify-center mb-4 text-[#557a59]">{icon}</div>
               <h3 className="font-display italic text-lg text-[#2a3d2c] mb-3">{title}</h3>
               {lines.map((l) => (
-                <p key={l} className="text-[#6d8c70] text-sm leading-relaxed">{l}</p>
+                <p key={l} className="text-[#3e5c41] text-sm leading-relaxed">{l}</p>
               ))}
             </div>
           ))}
@@ -588,18 +588,18 @@ function OurStory() {
         <SectionTitle sub="Cómo hemos llegado hasta aquí" title="Nuestra historia" />
 
         <div className="reveal w-full bg-white border border-[#e1eedd] rounded-2xl px-8 py-10 text-center shadow-sm">
-          <span className="font-display italic text-[#8aad87] text-5xl leading-none select-none">"</span>
+          <span className="font-display italic text-[#557a59] text-5xl leading-none select-none">"</span>
           <p className="font-display italic text-[#2a3d2c] text-xl md:text-2xl leading-relaxed mt-1">
             Nos encontramos por casualidad, nos elegimos por amor, y hoy os invitamos a celebrar con nosotros el día en que lo hacemos para siempre.
           </p>
           <FloralDivider />
-          <p className="text-[#6d8c70] text-sm leading-relaxed mt-2">
+          <p className="text-[#3e5c41] text-sm leading-relaxed mt-2">
             Desde aquella tarde en que nuestros caminos se cruzaron, cada día ha sido una razón más para querernos. Gracias por ser parte de nuestra historia.
           </p>
-          <p className="text-[#8aad87] text-xs mt-5 tracking-widest uppercase">Clara &amp; Andrés</p>
+          <p className="text-[#557a59] text-xs mt-5 tracking-widest uppercase">Clara &amp; Andrés</p>
         </div>
 
-        <div className="reveal reveal-delay-1 flex flex-col items-center gap-2 mt-8 mb-3 text-[#8aad87] animate-bounce">
+        <div className="reveal reveal-delay-1 flex flex-col items-center gap-2 mt-8 mb-3 text-[#557a59] animate-bounce">
           <p className="text-xs uppercase tracking-[0.2em] font-medium">♥ Un pedacito de nuestra aventura ♥</p>
           <svg viewBox="0 0 24 32" fill="none" className="w-5 h-7" xmlns="http://www.w3.org/2000/svg">
             <line x1="12" y1="0" x2="12" y2="22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -751,7 +751,7 @@ function Venue() {
           <div className="reveal reveal-delay-2 flex flex-col gap-6">
             <div>
               <h3 className="font-display text-3xl text-[#2a3d2c] mb-2">Finca Las Rosas</h3>
-              <p className="text-[#6d8c70] leading-relaxed">
+              <p className="text-[#3e5c41] leading-relaxed">
                 Un paraíso verde en las afueras de Poza de la Sal. Jardines centenarios, una capilla de piedra y una terraza con vistas a los campos andaluces serán el escenario de nuestro día más especial.
               </p>
             </div>
@@ -762,7 +762,7 @@ function Venue() {
               </svg>
               <div>
                 <p className="text-[#2a3d2c] font-semibold text-sm">Dirección</p>
-                <p className="text-[#6d8c70] text-sm">Ctra. de Utrera km 12, Poza de la Sal</p>
+                <p className="text-[#3e5c41] text-sm">Ctra. de Utrera km 12, Poza de la Sal</p>
               </div>
             </div>
 
@@ -784,7 +784,7 @@ function Venue() {
               </svg>
               <div>
                 <p className="text-[#2a3d2c] font-semibold text-sm">¿Dónde dormir?</p>
-                <p className="text-[#6d8c70] text-sm leading-relaxed mt-1">
+                <p className="text-[#3e5c41] text-sm leading-relaxed mt-1">
                   Para quien no quiera volver a Burgos esa noche, tenemos reservado un albergue cerca de la finca. Ten en cuenta que las camas y los baños son compartidos — un plan sencillo y económico para seguir la fiesta hasta tarde.
                 </p>
               </div>
@@ -830,7 +830,7 @@ function HowToArrive() {
           </div>
           <div>
             <h3 className="font-display italic text-lg text-[#2a3d2c] mb-1">Parking privado</h3>
-            <p className="text-[#6d8c70] text-sm leading-relaxed">
+            <p className="text-[#3e5c41] text-sm leading-relaxed">
               La finca cuenta con parking privado gratuito para todos los invitados que prefieran acudir en su propio coche.
             </p>
           </div>
@@ -849,7 +849,7 @@ function HowToArrive() {
             </div>
             <div>
               <h3 className="font-display italic text-lg text-[#2a3d2c] mb-1">Servicio de autobús</h3>
-              <p className="text-[#6d8c70] text-sm leading-relaxed">
+              <p className="text-[#3e5c41] text-sm leading-relaxed">
                 Ponemos a disposición un autobús gratuito desde Burgos, con dos puntos de salida. La vuelta se hará en dos turnos: a las 11:00h y a las 02:00h.
               </p>
             </div>
@@ -859,7 +859,7 @@ function HowToArrive() {
             {busStops.map(({ name, address, mapsQuery, departure }) => (
               <div
                 key={name}
-                className="flex flex-col items-center text-center gap-2 p-5 bg-[#f2f7f0] rounded-2xl border border-[#e1eedd] hover:border-[#8aad87] hover:shadow-sm transition-all duration-300"
+                className="flex flex-col items-center text-center gap-2 p-5 bg-[#f2f7f0] rounded-2xl border border-[#e1eedd] hover:border-[#557a59] hover:shadow-sm transition-all duration-300"
               >
                 <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-1 shadow-sm">
                   <svg viewBox="0 0 24 24" fill="none" className="w-4.5 h-4.5 text-[#557a59]" stroke="currentColor" strokeWidth="1.5">
@@ -867,7 +867,7 @@ function HowToArrive() {
                   </svg>
                 </div>
                 <p className="text-[#2a3d2c] font-semibold text-sm">{name}</p>
-                <p className="text-[#6d8c70] text-xs">{address}</p>
+                <p className="text-[#3e5c41] text-xs">{address}</p>
                 <div className="inline-flex items-center gap-1.5 bg-white px-3 py-1 rounded-full border border-[#e1eedd] mt-1">
                   <svg viewBox="0 0 24 24" fill="none" className="w-3 h-3 text-[#557a59]" stroke="currentColor" strokeWidth="2">
                     <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" strokeLinecap="round" />
@@ -889,7 +889,7 @@ function HowToArrive() {
             ))}
           </div>
 
-          <p className="text-[#8aad87] text-xs mt-5 text-center">
+          <p className="text-[#557a59] text-xs mt-5 text-center">
             Autobús de vuelta a Burgos: 11:00h y 02:00h
           </p>
         </div>
@@ -972,7 +972,7 @@ function Asistencia() {
 
   const radioClass = (active: boolean) =>
     `flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all ${
-      active ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#6d8c70] hover:border-[#8aad87]'
+      active ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
     }`
 
   return (
@@ -982,7 +982,7 @@ function Asistencia() {
           <p className="text-[#c4ddbf] uppercase tracking-[0.25em] text-xs mb-3">Confirmación de asistencia</p>
           <h2 className="font-display text-4xl md:text-5xl text-white font-light italic leading-tight">¿Vendrás?</h2>
           <div className="w-14 h-px bg-gradient-to-r from-transparent via-[#c4ddbf] to-transparent mx-auto mt-5" />
-          <p className="text-[#a8c9ab] text-sm mt-4">Por favor confirma antes del X de XXX de 2027</p>
+          <p className="text-white/80 text-sm mt-4">Por favor confirma antes del X de XXX de 2027</p>
         </div>
 
         {sent ? (
@@ -1164,7 +1164,7 @@ function Contact() {
     <Section id="contacto" className="bg-[#fdfaf5]">
       <div ref={ref} className="max-w-xl mx-auto text-center">
         <SectionTitle sub="Estamos para ayudar" title="Por si tienes dudas" />
-        <p className="reveal text-[#6d8c70] text-sm leading-relaxed max-w-md mx-auto mb-10">
+        <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-10">
           Si tienes cualquier duda sobre el evento, el transporte o el alojamiento, no dudes en escribirnos.
         </p>
         <div className="reveal reveal-delay-1 grid sm:grid-cols-2 gap-6">
@@ -1177,7 +1177,7 @@ function Contact() {
                 href={toWhatsApp(phone)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center gap-2 p-6 bg-white rounded-2xl border border-[#e1eedd] hover:border-[#8aad87] hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                className="group flex flex-col items-center gap-2 p-6 bg-white rounded-2xl border border-[#e1eedd] hover:border-[#557a59] hover:shadow-md hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="w-11 h-11 rounded-full bg-[#e1eedd] flex items-center justify-center mb-1 group-hover:bg-[#557a59] transition-colors">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#557a59] group-hover:text-white transition-colors">
@@ -1202,10 +1202,10 @@ function Footer() {
   return (
     <footer className="bg-[#2a3d2c] text-center py-12 px-5">
       <LeafLeft className="inline-block w-8 opacity-30" />
-      <span className="mx-3 font-display italic text-[#8aad87] text-2xl">Clara &amp; Andrés</span>
+      <span className="mx-3 font-display italic text-[#557a59] text-2xl">Clara &amp; Andrés</span>
       <LeafRight className="inline-block w-8 opacity-30" />
-        <p className="text-[#4d7a52] text-xs mt-4 tracking-widest uppercase">XII · XI · MMXXVII</p>
-      <p className="text-[#3e5c41] text-xs mt-6">Con todo nuestro amor ♥</p>
+        <p className="text-[#9dc49a] text-xs mt-4 tracking-widest uppercase">XII · XI · MMXXVII</p>
+      <p className="text-[#c4ddbf] text-xs mt-6">Con todo nuestro amor ♥</p>
     </footer>
   )
 }
