@@ -1,0 +1,10 @@
+{
+  "description": "Create elegant, responsive wedding invitation websites featuring RSVP forms, countdown timers, music, and essential event details for couples.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
