@@ -188,7 +188,7 @@ function Hero() {
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#f2f7f0]">
       <div className="absolute inset-0">
         <img
-          src="/public/gallery/foto10.jpg"
+           src={`${import.meta.env.BASE_URL}gallery/fotoPortada.jpg`}
           alt=""
           className="w-full h-full object-cover opacity-30"
           aria-hidden
@@ -755,8 +755,49 @@ function HowToArrive() {
   )
 }
 
-// ── RSVP ────────────────────────────────────────────────────────
-function RSVP() {
+// ── Two Photos Cascade ─────────────────────────────────────────
+function PhotoCascade() {
+  const ref = useReveal()
+
+  return (
+    <section ref={ref} className="py-5 px-5 bg-[#fdfaf5] overflow-hidden">
+      <div className="max-w-md sm:max-w-xl mx-auto relative">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 items-start">
+          {/* Foto izquierda — más arriba */}
+          <div className="reveal">
+            <div className="bg-white p-2 sm:p-3 pb-6 sm:pb-8 rounded-sm shadow-2xl -rotate-3">
+              <div className="aspect-[4/5] overflow-hidden bg-[#e1eedd]">
+                <img
+                  src={`${import.meta.env.BASE_URL}gallery/foto1.jpg`}
+                  alt=""
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Foto derecha — desplazada hacia abajo y superpuesta */}
+          <div className="reveal reveal-delay-1 mt-12 sm:mt-20 -ml-4 sm:-ml-8 relative z-10">
+            <div className="bg-white p-2 sm:p-3 pb-6 sm:pb-8 rounded-sm shadow-2xl rotate-3">
+              <div className="aspect-[4/5] overflow-hidden bg-[#e1eedd]">
+                <img
+                  src={`${import.meta.env.BASE_URL}gallery/foto2.jpg`}
+                  alt=""
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── Asistencia ────────────────────────────────────────────────────────
+function Asistencia() {
   const ref = useReveal()
   const [form, setForm] = useState({
     name: '',
@@ -792,7 +833,7 @@ function RSVP() {
     }`
 
   return (
-    <Section id="rsvp" className="bg-[#557a59]">
+    <Section id="asistencia" className="bg-[#557a59]">
       <div ref={ref} className="max-w-xl mx-auto">
         <div className="reveal text-center mb-10">
           <p className="text-[#c4ddbf] uppercase tracking-[0.25em] text-xs mb-3">Confirmación de asistencia</p>
@@ -1042,7 +1083,7 @@ function Nav() {
     { href: '#historia', label: 'Historia' },
     { href: '#lugar', label: 'Lugar' },
     { href: '#como-llegar', label: '¿Como llegar?' },
-    { href: '#rsvp', label: 'RSVP' },
+    { href: '#asistencia', label: 'Asistencia' },
     { href: '#contacto', label: 'Contacto' },
   ]
 
@@ -1098,7 +1139,8 @@ export default function App() {
       <ParallaxPhoto />
       <Venue />
       <HowToArrive />
-      <RSVP />
+      <PhotoCascade />
+      <Asistencia />
       <Contact />
       <Footer />
       <MusicPlayer />
