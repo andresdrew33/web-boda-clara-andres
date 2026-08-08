@@ -185,8 +185,7 @@ function MusicPlayer() {
 // ── Hero ────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#f2f7f0]">
-      <div className="absolute inset-0">
+      <section className="relative min-h-[100svh] min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#f2f7f0]">      <div className="absolute inset-0">
         <img
            src={`${import.meta.env.BASE_URL}gallery/fotoPortada.jpg`}
           alt=""
@@ -1272,7 +1271,7 @@ function Nav() {
 // ── App ──────────────────────────────────────────────────────────
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#f2f7f0]">
+    <div className="min-h-[100svh] min-h-[100dvh] bg-[#f2f7f0]">
       <Nav />
       <Hero />
       <Countdown />
