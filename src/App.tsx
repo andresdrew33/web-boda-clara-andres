@@ -164,7 +164,7 @@ function MusicPlayer() {
         <button
           onClick={toggle}
           title={playing ? 'Pausar música' : 'Reproducir música'}
-          className="relative w-12 h-12 rounded-full bg-[#557a59] text-white shadow-lg flex items-center justify-center hover:bg-[#3e5c41] transition-colors"
+          className="relative w-12 h-12 rounded-full bg-[#557a59] text-white shadow-lg border-2 border-white flex items-center justify-center hover:bg-[#3e5c41] transition-colors"
           style={{ cursor: 'pointer' }}
         >
           {playing ? (
@@ -508,14 +508,85 @@ function WeddingInfo() {
 function OurStory() {
   const ref = useReveal()
   const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const [playing, setPlaying] = useState(false)
+  const [muted, setMuted] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [duration, setDuration] = useState(0)
+
+  const togglePlay = () => {
+    const v = videoRef.current
+    if (!v) return
+    if (v.paused) v.play()
+    else v.pause()
+  }
+
+  const toggleMute = () => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = !v.muted
+    setMuted(v.muted)
+  }
+
+  const handleTimeUpdate = () => {
+    const v = videoRef.current
+    if (!v || !v.duration) return
+    setProgress((v.currentTime / v.duration) * 100)
+  }
+
+  const handleLoadedMetadata = () => {
+    const v = videoRef.current
+    if (!v) return
+    setDuration(v.duration)
+  }
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = videoRef.current
+    if (!v || !v.duration) return
+    const pct = Number(e.target.value)
+    v.currentTime = (pct / 100) * v.duration
+    setProgress(pct)
+  }
+
+  const formatTime = (secs: number) => {
+    if (!isFinite(secs)) return '0:00'
+    const m = Math.floor(secs / 60)
+    const s = Math.floor(secs % 60)
+    return `${m}:${String(s).padStart(2, '0')}`
+  }
+
+  const toggleFullscreen = async () => {
+    const el = containerRef.current
+    if (!el) return
+
+    if (document.fullscreenElement) {
+      if (screen.orientation && (screen.orientation as any).unlock) {
+        ;(screen.orientation as any).unlock()
+      }
+      document.exitFullscreen()
+      return
+    }
+
+    try {
+      if (el.requestFullscreen) {
+        await el.requestFullscreen()
+      } else if ((el as any).webkitRequestFullscreen) {
+        ;(el as any).webkitRequestFullscreen()
+      }
+
+      if (screen.orientation && (screen.orientation as any).lock) {
+        try {
+          await (screen.orientation as any).lock('landscape')
+        } catch {}
+      }
+    } catch {}
+  }
 
   return (
     <Section id="historia" className="bg-[#f2f7f0]">
       <div ref={ref} className="max-w-3xl mx-auto flex flex-col items-center">
         <SectionTitle sub="Cómo hemos llegado hasta aquí" title="Nuestra historia" />
 
-        {/* Quote / text block */}
         <div className="reveal w-full bg-white border border-[#e1eedd] rounded-2xl px-8 py-10 text-center shadow-sm">
           <span className="font-display italic text-[#8aad87] text-5xl leading-none select-none">"</span>
           <p className="font-display italic text-[#2a3d2c] text-xl md:text-2xl leading-relaxed mt-1">
@@ -528,8 +599,7 @@ function OurStory() {
           <p className="text-[#8aad87] text-xs mt-5 tracking-widest uppercase">Clara &amp; Andrés</p>
         </div>
 
-        {/* Arrow pointing down to video */}
-       <div className="reveal reveal-delay-1 flex flex-col items-center gap-2 mt-8 mb-3 text-[#8aad87] animate-bounce">
+        <div className="reveal reveal-delay-1 flex flex-col items-center gap-2 mt-8 mb-3 text-[#8aad87] animate-bounce">
           <p className="text-xs uppercase tracking-[0.2em] font-medium">♥ Un pedacito de nuestra aventura ♥</p>
           <svg viewBox="0 0 24 32" fill="none" className="w-5 h-7" xmlns="http://www.w3.org/2000/svg">
             <line x1="12" y1="0" x2="12" y2="22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -537,21 +607,94 @@ function OurStory() {
           </svg>
         </div>
 
-        {/* Video player */}
-        <div className="reveal reveal-delay-2 w-full">
-          <div className="relative w-full rounded-2xl overflow-hidden shadow-xl bg-black">
-            <video
-              ref={videoRef}
-              src={`${import.meta.env.BASE_URL}video/video.mp4`}
-              className="w-full max-h-[70vh] object-contain"
-              onPlay={() => {
-                setPlaying(true)
-                window.dispatchEvent(new CustomEvent('figma:pause-music'))
-              }}
-              onPause={() => setPlaying(false)}
-              onEnded={() => setPlaying(false)}
-              controls
+        <div ref={containerRef} className="video-container reveal reveal-delay-2 w-full relative rounded-2xl overflow-hidden shadow-xl bg-black group">
+          <video
+            ref={videoRef}
+            src={`${import.meta.env.BASE_URL}video/video.mp4`}
+            className="w-full max-h-[70vh] object-contain cursor-pointer"
+            onClick={togglePlay}
+            onPlay={() => {
+              setPlaying(true)
+              window.dispatchEvent(new CustomEvent('figma:pause-music'))
+            }}
+            onPause={() => setPlaying(false)}
+            onEnded={() => setPlaying(false)}
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMetadata={handleLoadedMetadata}
+            playsInline
+            onContextMenu={(e) => e.preventDefault()}
+          />
+
+          {!playing && (
+            <button
+              onClick={togglePlay}
+              className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity"
+              aria-label="Reproducir"
+            >
+              <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+                <svg viewBox="0 0 24 24" fill="#2a3d2c" className="w-7 h-7 ml-1">
+                  <path d="M8 5.14v14l11-7-11-7z" />
+                </svg>
+              </div>
+            </button>
+          )}
+
+          <div
+            className="absolute bottom-0 left-0 right-0 px-3 pb-2 pt-8 bg-gradient-to-t from-black/70 to-transparent flex flex-col gap-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <input
+              type="range"
+              min={0}
+              max={100}
+              step={0.1}
+              value={progress}
+              onChange={handleSeek}
+              className="video-seek w-full"
+              aria-label="Progreso del vídeo"
             />
+
+            <div className="flex items-center justify-between">
+              <button onClick={togglePlay} className="text-white p-1" aria-label={playing ? 'Pausar' : 'Reproducir'}>
+                {playing ? (
+                  <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6">
+                    <rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6 ml-0.5">
+                    <path d="M8 5.14v14l11-7-11-7z" />
+                  </svg>
+                )}
+              </button>
+
+              <span className="text-white text-xs tabular-nums">
+                {formatTime((progress / 100) * duration)} / {formatTime(duration)}
+              </span>
+
+              <div className="flex items-center gap-3">
+              <button onClick={toggleMute} className="text-white p-1" aria-label={muted ? 'Activar sonido' : 'Silenciar'}>
+                {muted ? (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="w-6 h-6">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" strokeLinecap="round" strokeLinejoin="round" />
+                    <line x1="23" y1="9" x2="17" y2="15" strokeLinecap="round" />
+                    <line x1="17" y1="9" x2="23" y2="15" strokeLinecap="round" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="w-6 h-6">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" fill="white" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M15.5 8.5a5 5 0 010 7" strokeLinecap="round" />
+                    <path d="M18.5 5.5a9 9 0 010 13" strokeLinecap="round" />
+                  </svg>
+                )}
+              </button>
+
+                <button onClick={toggleFullscreen} className="text-white p-1" aria-label="Pantalla completa">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="w-6 h-6">
+                    <path d="M8 3H5a2 2 0 00-2 2v3M16 3h3a2 2 0 012 2v3M8 21H5a2 2 0 01-2-2v-3M16 21h3a2 2 0 002-2v-3" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
