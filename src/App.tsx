@@ -220,7 +220,7 @@ function Hero() {
 </div>
 
     <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 px-4">
-  <p className="text-[#557a59] text-xs uppercase tracking-wide whitespace-nowrap">Desliza para enterarte</p>
+  <p className="text-[#557a59] text-xs uppercase tracking-wide whitespace-nowrap">Te seguimos contando</p>
   <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#8aad87]">
     <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
