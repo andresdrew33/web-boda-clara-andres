@@ -66,11 +66,13 @@ function LeafRight({ className = '' }: { className?: string }) {
 function FloralDivider() {
   return (
     <div className="flex items-center justify-center gap-3 my-2" aria-hidden>
-      <span className="text-[#557a59] text-lg opacity-60">✦</span>
-      <span className="block w-16 h-px bg-gradient-to-r from-transparent via-[#557a59] to-transparent opacity-60" />
-      <span className="text-[#557a59] text-base opacity-80">❧</span>
-      <span className="block w-16 h-px bg-gradient-to-r from-transparent via-[#557a59] to-transparent opacity-60" />
-      <span className="text-[#557a59] text-lg opacity-60">✦</span>
+      <span className="text-[#8aad87] text-lg opacity-60">✦</span>
+      <span className="block w-16 h-px bg-gradient-to-r from-transparent via-[#8aad87] to-transparent opacity-60" />
+      <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#8aad87] opacity-80" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 20L9 8l4 6.5L15.5 10 21 20H3z" fill="currentColor" />
+      </svg>
+      <span className="block w-16 h-px bg-gradient-to-r from-transparent via-[#8aad87] to-transparent opacity-60" />
+      <span className="text-[#8aad87] text-lg opacity-60">✦</span>
     </div>
   )
 }
@@ -185,13 +187,14 @@ function MusicPlayer() {
 // ── Hero ────────────────────────────────────────────────────────
 function Hero() {
   return (
-      <section className="relative min-h-[100svh] min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#f2f7f0]">      <div className="absolute inset-0">
-        <img
-           src={`${import.meta.env.BASE_URL}gallery/fotoPortada.jpg`}
-          alt=""
-          className="w-full h-full object-cover opacity-30"
-          aria-hidden
-        />
+      <section className="relative min-h-[100svh] min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#f2f7f0]">      
+      <div className="absolute inset-0">
+      <img
+  src={`${import.meta.env.BASE_URL}gallery/fotoPortada.jpg`}
+  alt=""
+  className="w-full h-full object-cover object-[65%_center] sm:object-center opacity-30"
+  aria-hidden
+/>
         <div className="absolute inset-0 bg-gradient-to-b from-[#f2f7f0]/60 via-transparent to-[#f2f7f0]/80" />
       </div>
 
@@ -200,24 +203,28 @@ function Hero() {
       <LeafLeft className="absolute left-4 bottom-20 w-20 md:w-32 animate-float-rev pointer-events-none opacity-60" />
       <LeafRight className="absolute right-4 bottom-20 w-20 md:w-32 animate-float pointer-events-none opacity-60" /> */}
 
-      <div className="relative z-10 text-center px-6 max-w-2xl mx-auto" style={{ animation: 'fade-up 1s ease-out both' }}>
-        <p className="text-[#557a59] uppercase tracking-[0.4em] text-xs font-semibold mb-8">
-          ¡Nos casamos!
-        </p>
-        <h1 className="font-display text-6xl md:text-8xl text-[#2a3d2c] font-light leading-none mb-2">Clara</h1>
-        <p className="font-display italic text-[#557a59] text-3xl md:text-4xl mb-2">&amp;</p>
-        <h1 className="font-display text-6xl md:text-8xl text-[#2a3d2c] font-light leading-none mb-10">Andrés</h1>
-        <FloralDivider />
-        <p className="mt-8 text-[#3e5c41] tracking-widest text-sm font-medium uppercase">12 · Junio · 2027</p>
-        <p className="text-[#557a59] text-sm mt-1">Poza de la Sal, Burgos</p>
-      </div>
+<div className="relative z-10 text-center px-6 max-w-2xl mx-auto" style={{ animation: 'fade-up 1s ease-out both' }}>
+  <div className="-translate-y-8 sm:translate-y-0">
+    <p className="text-[#557a59] uppercase tracking-[0.4em] text-sm font-semibold mb-8">
+      ¡Nos casamos!
+    </p>
+    <h1 className="font-display text-7xl md:text-9xl text-[#2a3d2c] font-light leading-none mb-2">Clara</h1>
+    <p className="font-display italic text-[#557a59] text-4xl md:text-5xl mb-2">&amp;</p>
+    <h1 className="font-display text-7xl md:text-9xl text-[#2a3d2c] font-light leading-none mb-10">Andrés</h1>
+  </div>
+  <div className="mt-36 sm:mt-0">
+  <FloralDivider />
+  <p className="mt-8 text-[#3e5c41] tracking-widest text-base font-medium uppercase">12 · Junio · 2027</p>
+  <p className="text-[#557a59] text-base mt-1">Poza de la Sal, Burgos</p>
+</div>
+</div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <p className="text-[#557a59] text-xs uppercase tracking-widest">Desliza para enterarte</p>
-        <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#557a59]">
-          <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
+    <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 px-4">
+  <p className="text-[#557a59] text-xs uppercase tracking-wide whitespace-nowrap">Desliza para enterarte</p>
+  <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#8aad87]">
+    <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+</div>
     </section>
   )
 }
@@ -1208,7 +1215,6 @@ function Footer() {
     </footer>
   )
 }
-
 // ── Nav ─────────────────────────────────────────────────────────
 function Nav() {
   const [scrolled, setScrolled] = useState(false)
@@ -1221,6 +1227,7 @@ function Nav() {
   }, [])
 
   const links = [
+    { href: '#', label: 'Inicio' },
     { href: '#info', label: 'Info' },
     { href: '#historia', label: 'Historia' },
     { href: '#lugar', label: 'Lugar' },
@@ -1230,44 +1237,92 @@ function Nav() {
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-400 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'py-5'}`}>
-      <div className="max-w-5xl mx-auto px-5 flex items-center justify-between">
-        <a href="#" className="font-display italic text-[#2a3d2c] text-lg">C &amp; A</a>
-        <div className="hidden md:flex items-center gap-7">
-          {links.map(({ href, label }) => (
-            <a key={href} href={href} className="text-[#557a59] hover:text-[#2a3d2c] text-sm font-medium transition-colors">
-              {label}
-            </a>
-          ))}
+    <>
+     <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-400 ${scrolled ? 'bg-white/10 backdrop-blur-md py-3' : 'py-5'}`}>
+  <div className="max-w-5xl mx-auto px-5 flex items-center justify-end relative z-10">
+ <div className="hidden md:flex items-center gap-7">
+            {links.map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                className="text-[#557a59] hover:text-[#2a3d2c] text-sm font-medium transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-[#557a59] p-1"
+            aria-label="Menú"
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2">
+              {open
+                ? <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
+                : <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />}
+            </svg>
+          </button>
         </div>
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-[#557a59] p-1"
-          aria-label="Menú"
-        >
-          <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2">
-            {open
-              ? <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
-              : <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />}
-          </svg>
-        </button>
-      </div>
+
+        {/* Degradado de desenfoque — sin color, solo transición de blur a nítido */}
+        {scrolled && (
+  <div className="absolute top-full left-0 right-0 h-32 pointer-events-none">
+    <div className="absolute inset-x-0 top-0 h-4" style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }} />
+    <div className="absolute inset-x-0 top-4 h-4" style={{ backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }} />
+    <div className="absolute inset-x-0 top-8 h-4" style={{ backdropFilter: 'blur(7px)', WebkitBackdropFilter: 'blur(7px)' }} />
+    <div className="absolute inset-x-0 top-12 h-4" style={{ backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)' }} />
+    <div className="absolute inset-x-0 top-16 h-4" style={{ backdropFilter: 'blur(3px)', WebkitBackdropFilter: 'blur(3px)' }} />
+    <div className="absolute inset-x-0 top-20 h-4" style={{ backdropFilter: 'blur(2px)', WebkitBackdropFilter: 'blur(2px)' }} />
+    <div className="absolute inset-x-0 top-24 h-4" style={{ backdropFilter: 'blur(1px)', WebkitBackdropFilter: 'blur(1px)' }} />
+    <div className="absolute inset-x-0 top-28 h-4" style={{ backdropFilter: 'blur(0.5px)', WebkitBackdropFilter: 'blur(0.5px)' }} />
+  </div>
+)}
+      </nav>
+
+      {/* Overlay y panel del menú móvil — fuera del <nav> para evitar el bug de backdrop-filter con position:fixed */}
       {open && (
-        <div className="md:hidden bg-white/95 backdrop-blur border-t border-[#e1eedd] px-5 py-4 flex flex-col gap-3">
+        <div
+          className="md:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-50"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      <div
+        className={`md:hidden fixed top-0 right-0 h-full w-72 max-w-[80vw] bg-white z-[60] shadow-2xl transition-transform duration-300 ease-out ${
+          open ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex items-center justify-between px-6 py-5 border-b border-[#e1eedd]">
+          <span className="font-display italic text-[#2a3d2c] text-lg">Menú</span>
+          <button
+            onClick={() => setOpen(false)}
+            className="text-[#557a59] p-1"
+            aria-label="Cerrar menú"
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2">
+              <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+        <div className="flex flex-col px-6 py-4">
           {links.map(({ href, label }) => (
             <a
-              key={href} href={href} onClick={() => setOpen(false)}
-              className="text-[#557a59] text-sm font-medium py-1 border-b border-[#f2f7f0]"
+              key={href}
+              href={href}
+              onClick={() => setOpen(false)}
+              className="text-[#2a3d2c] text-base font-medium py-4 border-b border-[#f2f7f0] flex items-center justify-between group"
             >
               {label}
+              <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 text-[#8aad87] opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </a>
           ))}
         </div>
-      )}
-    </nav>
+      </div>
+    </>
   )
 }
-
 // ── App ──────────────────────────────────────────────────────────
 export default function App() {
   return (
