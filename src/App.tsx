@@ -212,7 +212,7 @@ function Hero() {
     <p className="font-display italic text-[#557a59] text-4xl md:text-5xl mb-2">&amp;</p>
     <h1 className="font-display text-7xl md:text-9xl text-[#2a3d2c] font-light leading-none mb-10">Andrés</h1>
   </div>
-  <div className="mt-20 sm:mt-0">
+  <div className="mt-22 sm:mt-0">
   <FloralDivider />
   <p className="mt-8 text-[#3e5c41] tracking-widest text-base font-medium uppercase">12 · Junio · 2027</p>
   <p className="text-[#557a59] text-base mt-1">Poza de la Sal, Burgos</p>
