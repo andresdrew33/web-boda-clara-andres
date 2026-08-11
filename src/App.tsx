@@ -229,6 +229,8 @@ function Hero() {
   )
 }
 
+
+
 // ── Countdown ───────────────────────────────────────────────────
 function Countdown() {
   const { days, hours, minutes, seconds } = useCountdown()
@@ -240,22 +242,31 @@ function Countdown() {
     { value: seconds, label: 'Segundos' },
   ]
   return (
-    <section ref={ref} className="py-16 px-5 bg-[#557a59]">
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="reveal text-white/90 uppercase tracking-[0.3em] text-xs mb-8">Faltan tan solo</p>
-        <div className="reveal reveal-delay-1 grid grid-cols-4 gap-3 md:gap-6">
+    <section ref={ref} className="relative py-16 md:py-20 px-5 bg-[#557a59] overflow-hidden">
+      {/* Decoración de fondo — hojas sutiles flotando */}
+      <LeafLeft className="absolute -left-6 top-1/2 -translate-y-1/2 w-24 md:w-36 opacity-10 pointer-events-none" />
+      <LeafRight className="absolute -right-6 top-1/2 -translate-y-1/2 w-24 md:w-36 opacity-10 pointer-events-none" />
+
+      <div className="relative max-w-3xl mx-auto text-center">
+        <p className="reveal text-[#c4ddbf] uppercase tracking-[0.3em] text-xs mb-2">Faltan tan solo...</p>
+        <FloralDivider />
+
+        <div className="reveal reveal-delay-1 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-8">
           {units.map(({ value, label }) => (
             <div key={label} className="flex flex-col items-center">
-              <div className="bg-white/10 backdrop-blur rounded-2xl px-2 py-4 md:px-6 md:py-6 w-full border border-white/10">
-                <span className="font-display text-4xl md:text-6xl text-white font-light tabular-nums">
+              <div className="relative bg-white/10 backdrop-blur rounded-2xl px-3 py-5 md:px-6 md:py-6 w-full border border-white/20 shadow-lg overflow-hidden">
+                {/* Brillo decorativo sutil en la esquina */}
+                <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-white/10 blur-xl" />
+                <span className="relative font-display text-4xl sm:text-5xl md:text-6xl text-white font-light tabular-nums">
                   {String(value).padStart(2, '0')}
                 </span>
               </div>
-              <p className="text-white/90 text-xs uppercase tracking-widest mt-2">{label}</p>
+              <p className="text-[#c4ddbf] text-[11px] sm:text-xs uppercase tracking-widest mt-3">{label}</p>
             </div>
           ))}
         </div>
-        <p className="reveal reveal-delay-2 text-white/70 text-xs mt-8">12 de Junio de 2027 · 12:30h</p>
+
+        <p className="reveal reveal-delay-2 text-white/70 text-xs mt-10">12 de Junio de 2027 · 12:30h</p>
       </div>
     </section>
   )
@@ -408,8 +419,8 @@ function PhotoCarousel() {
   return (
     <section ref={sectionRef} className="py-16 bg-[#f2f7f0]">
       <div className="text-center mb-10 px-5 reveal">
-        <p className="text-[#557a59] uppercase tracking-[0.25em] text-xs font-semibold mb-3">Momentos juntos</p>
-        <h2 className="font-display text-4xl md:text-5xl text-[#2a3d2c] font-light italic leading-tight">Nuestra galería</h2>
+        <p className="text-[#557a59] uppercase tracking-[0.25em] text-xs font-semibold mb-3">Lo que hemos vivido</p>
+        <h2 className="font-display text-4xl md:text-5xl text-[#2a3d2c] font-light italic leading-tight">Nuestro rollo</h2>
         <div className="section-divider mt-5" />
       </div>
 
