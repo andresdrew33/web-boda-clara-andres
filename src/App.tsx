@@ -81,7 +81,7 @@ function FloralDivider() {
 function Section({ id, className = '', children }: { id?: string; className?: string; children: React.ReactNode }) {
   const ref = useReveal()
   return (
-    <section id={id} ref={ref} className={`py-20 px-5 ${className}`}>
+    <section id={id} ref={ref} className={`py-10 px-5 ${className}`}>
       {children}
     </section>
   )
@@ -482,7 +482,7 @@ function WeddingInfo() {
         </svg>
       ),
       title: 'Horario',
-      lines: ['Ceremonia: 13:00h', 'Cóctel: 14:30h', 'Fiesta hasta las 02:00h'],
+      lines: ['Ceremonia: 13:00h', 'Cóctel: 14:30h', 'Fiesta: hasta que el cuerpo aguante'],
     },
     {
       icon: (
@@ -491,14 +491,14 @@ function WeddingInfo() {
         </svg>
       ),
       title: 'Lugar',
-      lines: ['Finca Las Rosas', 'Ctra. de Utrera km 12', 'Poza de la Sal, Burgos'],
+      lines: ['Albergue Poza de la Sal', 'Ctra. Cornudilla s/n', 'Poza de la Sal, Burgos'],
     },
   ]
 
   return (
     <Section id="info" className="bg-[#fdfaf5]">
       <div className="max-w-3xl mx-auto">
-        <SectionTitle sub="Detalles del día" title="Todo lo que necesitas saber"/>
+        <SectionTitle sub="Detalles del día" title="Lo más importante"/>
         <p className="reveal text-center text-[#3e5c41] text-sm leading-relaxed max-w-lg mx-auto mb-10">
           Aquí tienes toda la información para que no se te escape ningún detalle de nuestro gran día.
         </p>
@@ -602,7 +602,7 @@ function OurStory() {
   return (
     <Section id="historia" className="bg-[#f2f7f0]">
       <div ref={ref} className="max-w-3xl mx-auto flex flex-col items-center">
-        <SectionTitle sub="Cómo hemos llegado hasta aquí" title="Nuestra historia" />
+        <SectionTitle sub="Cómo hemos llegado hasta aquí" title="Kilómetros y aventuras" />
 
         <div className="reveal w-full bg-white border border-[#e1eedd] rounded-2xl px-8 py-10 text-center shadow-sm">
           <span className="font-display italic text-[#557a59] text-5xl leading-none select-none">"</span>
@@ -617,7 +617,7 @@ function OurStory() {
         </div>
 
         <div className="reveal reveal-delay-1 flex flex-col items-center gap-2 mt-8 mb-3 text-[#557a59] animate-bounce">
-          <p className="text-xs uppercase tracking-[0.2em] font-medium">♥ Un pedacito de nuestra aventura ♥</p>
+          <p className="text-xs text-center uppercase tracking-[0.2em] font-medium">♥ Un pedacito de nuestra aventura ♥</p>
           <svg viewBox="0 0 24 32" fill="none" className="w-5 h-7" xmlns="http://www.w3.org/2000/svg">
             <line x1="12" y1="0" x2="12" y2="22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             <path d="M5 16l7 10 7-10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -739,7 +739,7 @@ function ParallaxPhoto() {
   return (
     <div ref={ref} className="relative w-full h-[35vh] md:h-[70vh] overflow-hidden bg-[#c4ddbf]">
       <img
-        src="https://images.unsplash.com/photo-1722805740177-04256b6517f2?w=1600&h=1000&fit=crop&auto=format"
+        src="https://i.pinimg.com/736x/25/a9/aa/25a9aaf075f7fe300078a3dc7710811e.jpg"
         alt="Clara y Andrés"
         className="w-full h-[calc(100%+80px)] object-cover object-top will-change-transform"
         style={{ marginTop: '-40px' }}
@@ -759,15 +759,15 @@ function Venue() {
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div className="reveal reveal-delay-1 rounded-3xl overflow-hidden shadow-lg bg-[#c4ddbf] aspect-[4/3]">
             <img
-              src="https://images.unsplash.com/photo-1624067056935-593eb6595294?w=900&h=700&fit=crop&auto=format"
-              alt="Finca Las Rosas"
+              src="https://static.wikia.nocookie.net/spongebob/images/9/9d/Man_Ray_Returns_001.png/revision/latest?cb=20171001162510"
+              alt="Albergue Poza de la Sal"
               className="w-full h-full object-cover"
               loading="lazy"
             />
           </div>
           <div className="reveal reveal-delay-2 flex flex-col gap-6">
             <div>
-              <h3 className="font-display text-3xl text-[#2a3d2c] mb-2">Finca Las Rosas</h3>
+              <h3 className="font-display text-3xl text-[#2a3d2c] mb-2">Albergue Poza de la Sal</h3>
               <p className="text-[#3e5c41] leading-relaxed">
                 Un paraíso verde en las afueras de Poza de la Sal. Jardines centenarios, una capilla de piedra y una terraza con vistas a los campos andaluces serán el escenario de nuestro día más especial.
               </p>
@@ -779,12 +779,12 @@ function Venue() {
               </svg>
               <div>
                 <p className="text-[#2a3d2c] font-semibold text-sm">Dirección</p>
-                <p className="text-[#3e5c41] text-sm">Ctra. de Utrera km 12, Poza de la Sal</p>
+                <p className="text-[#3e5c41] text-sm">Ctra. Cornudilla s/n, Poza de la Sal, Burgos</p>
               </div>
             </div>
 
             
-             <a href="https://maps.google.com/?q=Poza de la Sal+Espana"
+             <a href="https://maps.google.com/?q=Albergue Poza de la Sal+Espana"
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center justify-center gap-2 bg-[#557a59] text-white px-6 py-3 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md w-fit mx-auto"
@@ -800,9 +800,9 @@ function Venue() {
                 <path d="M4 21v-7a2 2 0 012-2h12a2 2 0 012 2v7M4 21h16M9 12V7a3 3 0 016 0v5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <div>
-                <p className="text-[#2a3d2c] font-semibold text-sm">¿Dónde dormir?</p>
+                <p className="text-[#2a3d2c] font-semibold text-sm">Cama incluída</p>
                 <p className="text-[#3e5c41] text-sm leading-relaxed mt-1">
-                  Para quien no quiera volver a Burgos esa noche, tenemos reservado un albergue cerca de la finca. Ten en cuenta que las camas y los baños son compartidos — un plan sencillo y económico para seguir la fiesta hasta tarde.
+                  Para quien no quiera volver a Burgos esa noche se puede quedar a dormir en el albergue, pero ten en cuenta que las habitaciones y los baños son compartidos.
                 </p>
               </div>
             </div>
@@ -835,7 +835,7 @@ function HowToArrive() {
   return (
     <Section id="como-llegar" className="bg-[#f2f7f0]">
       <div ref={ref} className="max-w-3xl mx-auto">
-        <SectionTitle sub="Para que no falte de nada" title="¿Cómo llegar?" />
+        <SectionTitle sub="Para que no te pierdas" title="¿Cómo llegar?" />
 
         {/* Parking */}
         <div className="reveal flex items-start gap-4 p-6 bg-white rounded-2xl border border-[#e1eedd] mb-6">
@@ -848,7 +848,7 @@ function HowToArrive() {
           <div>
             <h3 className="font-display italic text-lg text-[#2a3d2c] mb-1">Parking privado</h3>
             <p className="text-[#3e5c41] text-sm leading-relaxed">
-              La finca cuenta con parking privado gratuito para todos los invitados que prefieran acudir en su propio coche.
+              El sitio cuenta con parking privado gratuito para todos los invitados que prefieran acudir en su propio coche.
             </p>
           </div>
         </div>
@@ -867,7 +867,7 @@ function HowToArrive() {
             <div>
               <h3 className="font-display italic text-lg text-[#2a3d2c] mb-1">Servicio de autobús</h3>
               <p className="text-[#3e5c41] text-sm leading-relaxed">
-                Ponemos a disposición un autobús gratuito desde Burgos, con dos puntos de salida. La vuelta se hará en dos turnos: a las 11:00h y a las 02:00h.
+                Habrá un autobús desde Burgos, con dos puntos de salida. La vuelta se hará en dos turnos: a las 11:00h y a las 02:00h.
               </p>
             </div>
           </div>
@@ -906,9 +906,9 @@ function HowToArrive() {
             ))}
           </div>
 
-          <p className="text-[#557a59] text-xs mt-5 text-center">
+          {/* <p className="text-[#557a59] text-xs mt-5 text-center">
             Autobús de vuelta a Burgos: 11:00h y 02:00h
-          </p>
+          </p> */}
         </div>
       </div>
     </Section>
@@ -1221,7 +1221,7 @@ function Footer() {
       <LeafLeft className="inline-block w-8 opacity-30" />
       <span className="mx-3 font-display italic text-[#557a59] text-2xl">Clara &amp; Andrés</span>
       <LeafRight className="inline-block w-8 opacity-30" />
-        <p className="text-[#9dc49a] text-xs mt-4 tracking-widest uppercase">XII · XI · MMXXVII</p>
+        <p className="text-[#9dc49a] text-xs mt-4 tracking-widest uppercase">12 · 06 · 2027</p>
       <p className="text-[#c4ddbf] text-xs mt-6">Con todo nuestro amor ♥</p>
     </footer>
   )
