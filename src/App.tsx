@@ -739,7 +739,7 @@ function ParallaxPhoto() {
   return (
     <div ref={ref} className="relative w-full h-[35vh] md:h-[70vh] overflow-hidden bg-[#c4ddbf]">
       <img
-        src="https://i.pinimg.com/736x/25/a9/aa/25a9aaf075f7fe300078a3dc7710811e.jpg"
+        src={`${import.meta.env.BASE_URL}gallery/grande.jpg`}
         alt="Clara y Andrés"
         className="w-full h-[calc(100%+80px)] object-cover object-top will-change-transform"
         style={{ marginTop: '-40px' }}
@@ -1007,12 +1007,16 @@ function Asistencia() {
     sleepover: '',
     bus: '',
     busTrip: '',
+    busStop: '',
     busReturn: '',
     intolerance: '',
     intoleranceDetail: '',
     message: '',
   })
   const [children, setChildren] = useState<{ id: string; name: string; age: string }[]>([])
+  const [showChildModal, setShowChildModal] = useState(false)
+  const [modalName, setModalName] = useState('')
+  const [modalAge, setModalAge] = useState('')
   const [sent, setSent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
@@ -1020,16 +1024,20 @@ function Asistencia() {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
   }
 
-  const addChild = () => {
-    setChildren((c) => [...c, { id: crypto.randomUUID(), name: '', age: '' }])
+  const openChildModal = () => {
+    setModalName('')
+    setModalAge('')
+    setShowChildModal(true)
+  }
+
+  const confirmAddChild = () => {
+    if (!modalName.trim() || !modalAge.trim()) return
+    setChildren((c) => [...c, { id: crypto.randomUUID(), name: modalName.trim(), age: modalAge.trim() }])
+    setShowChildModal(false)
   }
 
   const removeChild = (id: string) => {
     setChildren((c) => c.filter((child) => child.id !== id))
-  }
-
-  const updateChild = (id: string, field: 'name' | 'age', value: string) => {
-    setChildren((c) => c.map((child) => (child.id === id ? { ...child, [field]: value } : child)))
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -1069,7 +1077,7 @@ function Asistencia() {
             <p className="text-[#c4ddbf]">Hemos recibido tu confirmación. ¡Nos vemos el 12 de Junio!</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="reveal reveal-delay-1 bg-white rounded-3xl p-8 md:p-10 shadow-xl flex flex-col gap-5">
+          <form onSubmit={handleSubmit} className="reveal reveal-delay-1 bg-white rounded-3xl p-6 md:p-10 shadow-xl flex flex-col gap-5">
 
             {/* Nombre */}
             <div className="flex flex-col gap-1">
@@ -1115,56 +1123,38 @@ function Asistencia() {
                       Un texto que ya pondré luego.
                     </p>
 
-                    <div className="flex flex-col gap-3">
-                      {children.map((child, i) => (
-  <div key={child.id} className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 bg-white rounded-xl border border-[#e1eedd]">
-    <div className="flex-1 flex items-center gap-2">
-      <input
-        value={child.name}
-        onChange={(e) => updateChild(child.id, 'name', e.target.value)}
-        placeholder={`Nombre del niño/a ${i + 1}`}
-        required
-        className="flex-1 min-w-0 border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-      />
-      <button
-        type="button"
-        onClick={() => removeChild(child.id)}
-        className="sm:hidden text-[#3e5c41] hover:text-[#2a3d2c] p-2 shrink-0"
-        aria-label="Eliminar"
-      >
-        <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
-          <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
-        </svg>
-      </button>
-    </div>
-    <div className="flex items-center gap-2">
-      <input
-        value={child.age}
-        onChange={(e) => updateChild(child.id, 'age', e.target.value)}
-        placeholder="Edad"
-        type="number"
-        min={0}
-        required
-        className="w-full sm:w-20 border border-[#c4ddbf] rounded-xl px-3 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-      />
-      <button
-        type="button"
-        onClick={() => removeChild(child.id)}
-        className="hidden sm:block text-[#3e5c41] hover:text-[#2a3d2c] p-2 shrink-0"
-        aria-label="Eliminar"
-      >
-        <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
-          <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
-        </svg>
-      </button>
-    </div>
-  </div>
-))}
-                    </div>
+                    {/* Lista de niños añadidos — solo lectura */}
+                    {children.length > 0 && (
+                      <div className="flex flex-col gap-2">
+                        {children.map((child) => (
+                          <div
+                            key={child.id}
+                            className="flex items-center justify-between gap-3 bg-white rounded-xl border border-[#e1eedd] px-4 py-3"
+                          >
+                            <div className="flex items-center gap-3 min-w-0">
+                              <span className="text-[#2a3d2c] text-sm font-medium truncate min-w-[7ch]">{child.name}</span>
+                              <span className="text-[#557a59] text-xs bg-[#e1eedd] px-2 py-0.5 rounded-full shrink-0">
+                                {child.age}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => removeChild(child.id)}
+                              className="text-[#3e5c41] hover:text-[#2a3d2c] p-1 shrink-0"
+                              aria-label="Eliminar"
+                            >
+                              <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
+                                <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
+                              </svg>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     <button
                       type="button"
-                      onClick={addChild}
+                      onClick={openChildModal}
                       className="flex items-center justify-center gap-2 border-2 border-dashed border-[#c4ddbf] hover:border-[#557a59] text-[#557a59] rounded-xl py-2.5 text-sm font-medium transition-colors"
                       style={{ cursor: 'pointer' }}
                     >
@@ -1228,39 +1218,58 @@ function Asistencia() {
                 </div>
 
                 {form.bus === 'yes' && (
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué trayecto necesitas? *</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {[
-                        { val: 'ida', label: 'Solo ida' },
-                        { val: 'ida-vuelta', label: 'Ida y vuelta' },
-                        { val: 'vuelta', label: 'Solo vuelta' },
-                      ].map(({ val, label }) => (
-                        <label key={val} className={radioClass(form.busTrip === val)}>
-                          <input type="radio" name="busTrip" value={val} checked={form.busTrip === val} onChange={handleChange} className="sr-only" required />
-                          {label}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                )}
+  <div className="flex flex-col gap-2">
+    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué trayecto necesitas? *</label>
+    <div className="grid grid-cols-3 gap-2">
+      {[
+        { val: 'ida', label: 'Solo ida' },
+        { val: 'ida-vuelta', label: 'Ida y vuelta' },
+        { val: 'vuelta', label: 'Solo vuelta' },
+      ].map(({ val, label }) => (
+        <label key={val} className={radioClass(form.busTrip === val)}>
+          <input type="radio" name="busTrip" value={val} checked={form.busTrip === val} onChange={handleChange} className="sr-only" required />
+          {label}
+        </label>
+      ))}
+    </div>
+  </div>
+)}
 
-                {(form.busTrip === 'ida-vuelta' || form.busTrip === 'vuelta') && (
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿A qué hora volverás? *</label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        { val: '11:00', label: '11:00h' },
-                        { val: '02:00', label: '02:00h' },
-                      ].map(({ val, label }) => (
-                        <label key={val} className={radioClass(form.busReturn === val)}>
-                          <input type="radio" name="busReturn" value={val} checked={form.busReturn === val} onChange={handleChange} className="sr-only" required />
-                          {label}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                )}
+{/* Parada de ida — solo si necesita trayecto de ida */}
+{(form.busTrip === 'ida' || form.busTrip === 'ida-vuelta') && (
+  <div className="flex flex-col gap-2">
+    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Desde qué parada cogerás el bus de ida? *</label>
+    <div className="grid grid-cols-2 gap-3">
+      {[
+        { val: 'centro', label: 'Centro 11:30h' },
+        { val: 'gamonal', label: 'Gamonal 11:45h' },
+      ].map(({ val, label }) => (
+        <label key={val} className={radioClass(form.busStop === val)}>
+          <input type="radio" name="busStop" value={val} checked={form.busStop === val} onChange={handleChange} className="sr-only" required />
+          {label}
+        </label>
+      ))}
+    </div>
+  </div>
+)}
+
+{/* Horario de vuelta — solo si necesita trayecto de vuelta */}
+{(form.busTrip === 'ida-vuelta' || form.busTrip === 'vuelta') && (
+  <div className="flex flex-col gap-2">
+    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿A qué hora volverás? *</label>
+    <div className="grid grid-cols-2 gap-3">
+      {[
+        { val: '11:00', label: '11:00h' },
+        { val: '02:00', label: '02:00h' },
+      ].map(({ val, label }) => (
+        <label key={val} className={radioClass(form.busReturn === val)}>
+          <input type="radio" name="busReturn" value={val} checked={form.busReturn === val} onChange={handleChange} className="sr-only" required />
+          {label}
+        </label>
+      ))}
+    </div>
+  </div>
+)}
 
                 {/* Dormir en el albergue */}
                 <div className="flex flex-col gap-2">
@@ -1297,11 +1306,69 @@ function Asistencia() {
           </form>
         )}
       </div>
+
+      {/* Popup para añadir niño */}
+      {showChildModal && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center px-5"
+          onClick={() => setShowChildModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="font-display italic text-xl text-[#2a3d2c] mb-4 text-center">Añadir niñ@</h3>
+
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1">
+                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Nombre</label>
+                <input
+                  value={modalName}
+                  onChange={(e) => setModalName(e.target.value)}
+                  placeholder="Nombre"
+                  autoFocus
+                  className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Edad</label>
+                <input
+                  value={modalAge}
+                  onChange={(e) => setModalAge(e.target.value.replace(/\D/g, '').slice(0, 2))}
+                  placeholder="Edad"
+                  inputMode="numeric"
+                  className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                type="button"
+                onClick={() => setShowChildModal(false)}
+                className="flex-1 border border-[#c4ddbf] text-[#3e5c41] rounded-xl py-2.5 text-sm font-medium hover:bg-[#f2f7f0] transition-colors"
+                style={{ cursor: 'pointer' }}
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={confirmAddChild}
+                disabled={!modalName.trim() || !modalAge.trim()}
+                className="flex-1 bg-[#557a59] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-[#3e5c41] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{ cursor: modalName.trim() && modalAge.trim() ? 'pointer' : 'not-allowed' }}
+              >
+                Añadir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Section>
   )
 }
 
-// ── Contact ─────────────────────────────────────────────────────
+/// ── Contact ─────────────────────────────────────────────────────
 function Contact() {
   const ref = useReveal()
   const contacts = [
@@ -1318,27 +1385,29 @@ function Contact() {
         <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-10">
           Si tienes cualquier duda sobre el evento, el transporte o el alojamiento, no dudes en escribirnos.
         </p>
-        <div className="reveal reveal-delay-1 grid sm:grid-cols-2 gap-6">
+        <div className="reveal reveal-delay-1 flex flex-col gap-4 max-w-sm mx-auto">
           {contacts.map((contact) => {
             const name = contact.name
             const phone = contact.phone
             return (
-              
-               <a key={name}
+              <a
+                key={name}
                 href={toWhatsApp(phone)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center gap-2 p-6 bg-white rounded-2xl border border-[#e1eedd] hover:border-[#557a59] hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                className="group flex items-center gap-4 p-4 bg-white rounded-2xl border border-[#e1eedd] hover:border-[#557a59] hover:shadow-md transition-all duration-300"
               >
-                <div className="w-11 h-11 rounded-full bg-[#e1eedd] flex items-center justify-center mb-1 group-hover:bg-[#557a59] transition-colors">
+                <div className="w-11 h-11 rounded-full bg-[#e1eedd] flex items-center justify-center shrink-0 group-hover:bg-[#557a59] transition-colors">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#557a59] group-hover:text-white transition-colors">
                     <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.2h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m0 1.67c2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.82c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 01-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23m-4.52 4.7c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.03 0 1.2.87 2.36.99 2.52.12.16 1.7 2.72 4.2 3.7 2.08.82 2.5.66 2.95.62.45-.04 1.46-.6 1.66-1.18.2-.58.2-1.08.14-1.18-.06-.1-.22-.16-.46-.28-.24-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.01-.37.11-.49.11-.11.24-.29.36-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43-.14-.01-.3-.01-.46-.01z" />
                   </svg>
                 </div>
-                <p className="font-display italic text-lg text-[#2a3d2c]">{name}</p>
-                <span className="text-[#557a59] group-hover:text-[#3e5c41] text-sm font-medium transition-colors">
-                  {phone}
-                </span>
+                <div className="flex items-baseline gap-2">
+                  <p className="font-display italic text-lg text-[#2a3d2c]">{name}</p> -
+                  <span className="text-[#557a59] group-hover:text-[#3e5c41] text-sm font-medium transition-colors">
+                    {phone}
+                  </span>
+                </div>
               </a>
             )
           })}
@@ -1468,25 +1537,65 @@ function Nav() {
     </>
   )
 }
+
+// ── Contour line decorative layer ──────────────────────────────
+function ContourLayer({ top, rotate = 0, flipX = false, flipY = false, opacity = 0.15, size = '1400px' }: {
+  top: string
+  rotate?: number
+  flipX?: boolean
+  flipY?: boolean
+  opacity?: number
+  size?: string
+}) {
+  return (
+    <div
+      className="absolute left-0 right-0 pointer-events-none"
+      style={{
+        top,
+        height: '900px',
+        backgroundImage: `url(${import.meta.env.BASE_URL}gallery/curvas.png)`,
+        backgroundSize: size,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        opacity,
+        mixBlendMode: 'multiply',
+        transform: `rotate(${rotate}deg) scaleX(${flipX ? -1 : 1}) scaleY(${flipY ? -1 : 1})`,
+        zIndex: 5,
+      }}
+    />
+  )
+}
+
 // ── App ──────────────────────────────────────────────────────────
 export default function App() {
   return (
-    <div className="min-h-[100svh] min-h-[100dvh] bg-[#f2f7f0]">
-      <Nav />
-      <Hero />
-      <Countdown />
-      <PhotoCarousel />
-      <WeddingInfo />
-      <OurStory />
-      <ParallaxPhoto />
-      <Venue />
-      <HowToArrive />
-      <PhotoCascade />
-      <PhotoUpload />
-      <Asistencia />
-      <Contact />
-      <Footer />
-      <MusicPlayer />
+    <div className="min-h-screen bg-[#f2f7f0] relative overflow-hidden">
+      <ContourLayer top="0%" rotate={0} />
+      <ContourLayer top="12%" rotate={35} flipX />
+      <ContourLayer top="24%" rotate={-20} flipY />
+      <ContourLayer top="36%" rotate={90} />
+      <ContourLayer top="48%" rotate={-60} flipX flipY />
+      <ContourLayer top="60%" rotate={15} />
+      <ContourLayer top="72%" rotate={-45} flipX />
+      <ContourLayer top="84%" rotate={60} flipY />
+      <ContourLayer top="96%" rotate={0} flipX />
+
+      <div className="relative">
+        <Nav />
+        <Hero />
+        <Countdown />
+        <PhotoCarousel />
+        <WeddingInfo />
+        <OurStory />
+        <ParallaxPhoto />
+        <Venue />
+        <HowToArrive />
+        <PhotoCascade />
+        <Asistencia />
+        <Contact />
+        <Footer />
+        <MusicPlayer />
+      </div>
     </div>
   )
 }
