@@ -491,7 +491,7 @@ function WeddingInfo() {
         </svg>
       ),
       title: 'Lugar',
-      lines: ['Albergue Poza de la Sal', 'Ctra. Cornudilla s/n', 'Poza de la Sal, Burgos'],
+      lines: ['Albergue Virgen de Pedrajas ', 'Ctra. Cornudilla s/n', 'Poza de la Sal, Burgos'],
     },
   ]
 
@@ -749,7 +749,7 @@ function ParallaxPhoto() {
   )
 }
 
-// ── Venue ───────────────────────────────────────────────────────
+// ── Lugar ───────────────────────────────────────────────────────
 function Venue() {
   const ref = useReveal()
   return (
@@ -760,55 +760,68 @@ function Venue() {
           <div className="reveal reveal-delay-1 rounded-3xl overflow-hidden shadow-lg bg-[#c4ddbf] aspect-[4/3]">
             <img
               src="https://static.wikia.nocookie.net/spongebob/images/9/9d/Man_Ray_Returns_001.png/revision/latest?cb=20171001162510"
-              alt="Albergue Poza de la Sal"
+              alt="Albergue Virgen de Pedrajas"
               className="w-full h-full object-cover"
               loading="lazy"
             />
           </div>
           <div className="reveal reveal-delay-2 flex flex-col gap-6">
             <div>
-              <h3 className="font-display text-3xl text-[#2a3d2c] mb-2">Albergue Poza de la Sal</h3>
-              <p className="text-[#3e5c41] leading-relaxed">
-                Un paraíso verde en las afueras de Poza de la Sal. Jardines centenarios, una capilla de piedra y una terraza con vistas a los campos andaluces serán el escenario de nuestro día más especial.
+              <h3 className="font-display text-3xl text-[#2a3d2c] mb-2">Albergue Virgen de Pedrajas</h3>
+              <p className="text-[#3e5c41] leading-relaxed"> 
+                Un xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxlla xxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxx cxxxxxx xxxxxxxxx xxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxxxxxxx xxxl.
               </p>
             </div>
 
-            <div className="flex items-start gap-3 p-3 bg-white rounded-xl border border-[#e1eedd]">
-              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 mt-0.5 shrink-0 text-[#557a59]" stroke="currentColor" strokeWidth="1.5">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" /><circle cx="12" cy="9" r="2.5" />
-              </svg>
-              <div>
-                <p className="text-[#2a3d2c] font-semibold text-sm">Dirección</p>
-                <p className="text-[#3e5c41] text-sm">Ctra. Cornudilla s/n, Poza de la Sal, Burgos</p>
+            <div className="bg-[#f2f7f0] rounded-xl border border-[#e1eedd] p-4 flex flex-col items-center text-center gap-3">
+              <div className="flex items-start gap-3 text-left w-full">
+              <div className="w-11 h-11 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#557a59]" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" /><circle cx="12" cy="9" r="2.5" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[#2a3d2c] font-semibold text-sm">Dirección</p>
+                  <p className="text-[#6d8c70] text-sm">Ctra. de Utrera km 12, Poza de la Sal</p>
+                </div>
               </div>
-            </div>
 
-            
-             <a href="https://maps.google.com/?q=Albergue Poza de la Sal+Espana"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center gap-2 bg-[#557a59] text-white px-6 py-3 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md w-fit mx-auto"
+              <a
+                href="https://maps.google.com/?q=Poza de la Sal+Espana"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2 bg-[#557a59] text-white px-5 py-2 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-xs font-medium shadow-sm hover:shadow-md w-fit"
               >
-                <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 transition-transform group-hover:scale-110" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" /><circle cx="12" cy="9" r="2.5" />
-                </svg>
                 Ver en Google Maps
               </a>
+            </div>
 
-            <div className="flex items-start gap-3 p-4 bg-[#f2f7f0] rounded-xl border border-[#e1eedd]">
-              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 mt-0.5 shrink-0 text-[#557a59]" stroke="currentColor" strokeWidth="1.5">
-                <path d="M4 21v-7a2 2 0 012-2h12a2 2 0 012 2v7M4 21h16M9 12V7a3 3 0 016 0v5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <div>
-                <p className="text-[#2a3d2c] font-semibold text-sm">Cama incluída</p>
-                <p className="text-[#3e5c41] text-sm leading-relaxed mt-1">
-                  Para quien no quiera volver a Burgos esa noche se puede quedar a dormir en el albergue, pero ten en cuenta que las habitaciones y los baños son compartidos.
-                </p>
+            <div className="p-4 bg-[#f2f7f0] rounded-xl border border-[#e1eedd]">
+              <div className="flex items-start gap-4">
+                <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
+                  <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#557a59]" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M3 11l9-8 9 8" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M5 10v9a1 1 0 001 1h12a1 1 0 001-1v-9" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M10 20v-6a1 1 0 011-1h2a1 1 0 011 1v6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[#3e5c41] text-sm leading-relaxed">
+                    Si no quieres volver a Burgos esa noche te puedes quedar a dormir en el albergue.
+                  </p>
+                  <p className="text-[#3e5c41] text-sm leading-relaxed mt-2">
+                    Ten en cuenta que los baños y las habitaciones son compartidos.
+                  </p>
+                </div>
               </div>
+
+              <p className="font-display italic text-[#557a59] text-base mt-3 text-center">
+                ¡Trae tu saco/sábana y espíritu de campamento!
+              </p>
+            </div>
             </div>
           </div>
         </div>
-      </div>
     </Section>
   )
 }
@@ -820,15 +833,15 @@ function HowToArrive() {
   const busStops = [
     {
       name: 'Parada Centro',
-      address: 'Plaza Mayor, Burgos',
-      mapsQuery: 'Plaza Mayor, Burgos, España',
-      departure: '11:00h',
+      address: 'Pza. Santa Teresa',
+      mapsQuery: 'Plaza Santa Teresa, Burgos',
+      departure: '11:30h',
     },
     {
-      name: 'Parada Estación',
-      address: 'Estación de Autobuses, Burgos',
-      mapsQuery: 'Estación de Autobuses, Burgos, España',
-      departure: '11:15h',
+      name: 'Parada Gamonal',
+      address: 'Iglesia Antigua de Gamonal',
+      mapsQuery: 'Iglesia Antigua de Gamonal, Burgos',
+      departure: '11:45h',
     },
   ]
 
@@ -854,62 +867,57 @@ function HowToArrive() {
         </div>
 
         {/* Bus */}
-        <div className="reveal reveal-delay-1 p-6 bg-white rounded-2xl border border-[#e1eedd]">
-          <div className="flex items-start gap-4 mb-6">
-            <div className="w-11 h-11 rounded-full bg-[#e1eedd] flex items-center justify-center shrink-0">
-              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#557a59]" stroke="currentColor" strokeWidth="1.5">
-                <rect x="3" y="5" width="18" height="12" rx="2" />
-                <path d="M3 11h18M7 17v2M17 17v2" strokeLinecap="round" />
-                <circle cx="7.5" cy="14" r="0.5" fill="currentColor" />
-                <circle cx="16.5" cy="14" r="0.5" fill="currentColor" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-display italic text-lg text-[#2a3d2c] mb-1">Servicio de autobús</h3>
-              <p className="text-[#3e5c41] text-sm leading-relaxed">
-                Habrá un autobús desde Burgos, con dos puntos de salida. La vuelta se hará en dos turnos: a las 11:00h y a las 02:00h.
-              </p>
-            </div>
-          </div>
+<div className="reveal reveal-delay-1 p-6 bg-white rounded-2xl border border-[#e1eedd]">
+  <div className="flex items-start gap-4 mb-6">
+    <div className="w-11 h-11 rounded-full bg-[#e1eedd] flex items-center justify-center shrink-0">
+    <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-[#557a59]" stroke="currentColor" strokeWidth="1.5">
+  <path d="M4 16V6a2 2 0 012-2h12a2 2 0 012 2v10" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M4 16a2 2 0 002 2h12a2 2 0 002-2M4 16h16" strokeLinecap="round" strokeLinejoin="round" />
+  <path d="M4 10h16" strokeLinecap="round" />
+  <path d="M8 6v4M16 6v4" strokeLinecap="round" />
+  <circle cx="7.5" cy="19" r="1.5" />
+  <circle cx="16.5" cy="19" r="1.5" />
+</svg>
+    </div>
+    <div>
+      <h3 className="font-display italic text-lg text-[#2a3d2c] mb-1">Servicio de autobús</h3>
+      <p className="text-[#3e5c41] text-sm leading-relaxed">
+        Habrá un autobús desde Burgos, con dos puntos de salida. La vuelta se hará en dos turnos: a las 11:00h y a las 02:00h.
+      </p>
+    </div>
+  </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
-            {busStops.map(({ name, address, mapsQuery, departure }) => (
-              <div
-                key={name}
-                className="flex flex-col items-center text-center gap-2 p-5 bg-[#f2f7f0] rounded-2xl border border-[#e1eedd] hover:border-[#557a59] hover:shadow-sm transition-all duration-300"
-              >
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-1 shadow-sm">
-                  <svg viewBox="0 0 24 24" fill="none" className="w-4.5 h-4.5 text-[#557a59]" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" /><circle cx="12" cy="9" r="2.5" />
-                  </svg>
-                </div>
-                <p className="text-[#2a3d2c] font-semibold text-sm">{name}</p>
-                <p className="text-[#3e5c41] text-xs">{address}</p>
-                <div className="inline-flex items-center gap-1.5 bg-white px-3 py-1 rounded-full border border-[#e1eedd] mt-1">
-                  <svg viewBox="0 0 24 24" fill="none" className="w-3 h-3 text-[#557a59]" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" strokeLinecap="round" />
-                  </svg>
-                  <span className="text-[#557a59] text-xs font-semibold uppercase tracking-wider">{departure}</span>
-                </div>
-                
-                 <a href={`https://maps.google.com/?q=${encodeURIComponent(mapsQuery)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-[#557a59] hover:text-[#3e5c41] text-xs font-medium mt-2 transition-colors"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" /><circle cx="12" cy="9" r="2.5" />
-                  </svg>
-                  Ver en Google Maps
-                </a>
-              </div>
-            ))}
-          </div>
+  <div className="grid sm:grid-cols-2 gap-4">
+    {busStops.map(({ name, address, mapsQuery, departure }) => (
+      <a
+      key={name}
+      href={`https://maps.google.com/?q=${encodeURIComponent(mapsQuery)}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center justify-between gap-3 p-4 bg-[#f2f7f0] rounded-xl border border-[#e1eedd] hover:border-[#557a59] hover:shadow-sm transition-all duration-300"
+    >
+      <div className="flex items-center gap-2.5">
+        <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 shrink-0 text-[#557a59] transition-transform group-hover:scale-110" stroke="currentColor" strokeWidth="1.5">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" /><circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <div>
+          <p className="text-[#2a3d2c] font-semibold text-sm">{name}</p>
+          <p className="text-[#3e5c41] text-xs">{address}</p>
+        </div>
+      </div>
+      <div className="flex flex-col items-end shrink-0">
+        <span className="text-[#557a59] text-xs uppercase tracking-wider">Salida</span>
+        <span className="text-[#2a3d2c] text-sm font-semibold tabular-nums">{departure}</span>
+      </div>
+    </a>
+    ))}
+  </div>
+</div>
 
           {/* <p className="text-[#557a59] text-xs mt-5 text-center">
             Autobús de vuelta a Burgos: 11:00h y 02:00h
           </p> */}
-        </div>
+        {/* </div> */}
       </div>
     </Section>
   )
@@ -956,13 +964,46 @@ function PhotoCascade() {
   )
 }
 
+// ── Photo Upload QR ────────────────────────────────────────────
+function PhotoUpload() {
+  const ref = useReveal()
+  const driveUrl = 'https://drive.google.com/drive/folders/17K_Hx308S66g7fxGouypoJfFtH_r95Zw'
+
+  return (
+    <Section id="fotos" className="bg-[#f2f7f0]">
+      <div ref={ref} className="max-w-lg mx-auto text-center">
+        <SectionTitle sub="Ayúdanos a recordarlo" title="Comparte tus fotos" />
+        <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-8">
+          Nos encantaría ver la boda a través de vuestros ojos. Pulsa el botón para guardarte el enlace y poder subir las fotos y vídeos que hagáis ese día a nuestro álbum.
+        </p>
+
+        <div className="reveal reveal-delay-2 mt-6">
+          <a
+            href={driveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#557a59] text-white px-6 py-3 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md"
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
+    <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="12" cy="13" r="4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+            Abrir álbum
+          </a>
+        </div>
+      </div>
+    </Section>
+  )
+}
+
 // ── Asistencia ────────────────────────────────────────────────────────
 function Asistencia() {
   const ref = useReveal()
   const [form, setForm] = useState({
     name: '',
-    email: '',
     attends: '',
+    hasChildren: '',
+    childrenNotes: '',
     sleepover: '',
     bus: '',
     busTrip: '',
@@ -971,11 +1012,24 @@ function Asistencia() {
     intoleranceDetail: '',
     message: '',
   })
+  const [children, setChildren] = useState<{ id: string; name: string; age: string }[]>([])
   const [sent, setSent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
+  }
+
+  const addChild = () => {
+    setChildren((c) => [...c, { id: crypto.randomUUID(), name: '', age: '' }])
+  }
+
+  const removeChild = (id: string) => {
+    setChildren((c) => c.filter((child) => child.id !== id))
+  }
+
+  const updateChild = (id: string, field: 'name' | 'age', value: string) => {
+    setChildren((c) => c.map((child) => (child.id === id ? { ...child, [field]: value } : child)))
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -988,7 +1042,7 @@ function Asistencia() {
   }
 
   const radioClass = (active: boolean) =>
-    `flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all ${
+    `flex items-center justify-center text-center gap-2 px-4 py-3 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all leading-tight ${
       active ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
     }`
 
@@ -999,12 +1053,16 @@ function Asistencia() {
           <p className="text-[#c4ddbf] uppercase tracking-[0.25em] text-xs mb-3">Confirmación de asistencia</p>
           <h2 className="font-display text-4xl md:text-5xl text-white font-light italic leading-tight">¿Vendrás?</h2>
           <div className="w-14 h-px bg-gradient-to-r from-transparent via-[#c4ddbf] to-transparent mx-auto mt-5" />
-          <p className="text-white/80 text-sm mt-4">Por favor confirma antes del X de XXX de 2027</p>
+          <p className="text-white/80 text-sm mt-4">Por favor confirma antes del 01/03/2027</p>
         </div>
 
         {sent ? (
           <div className="reveal text-center bg-white/10 backdrop-blur rounded-3xl p-12 border border-white/20">
-            <div className="text-5xl mb-4">🌿</div>
+            <div className="flex justify-center mb-4">
+              <svg viewBox="0 0 24 24" fill="none" className="w-10 h-10 text-white" stroke="currentColor" strokeWidth="1.5">
+                <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
             <h3 className="font-display italic text-2xl text-white mb-3">
               ¡Gracias, {form.name.split(' ')[0] || 'querido invitado'}!
             </h3>
@@ -1023,21 +1081,11 @@ function Asistencia() {
               />
             </div>
 
-            {/* Email */}
-            <div className="flex flex-col gap-1">
-              <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Email *</label>
-              <input
-                name="email" type="email" value={form.email} onChange={handleChange} required
-                placeholder="tu@email.com"
-                className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-              />
-            </div>
-
             {/* Asistencia */}
             <div className="flex flex-col gap-2">
               <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Asistirás? *</label>
               <div className="grid grid-cols-2 gap-3">
-                {[{ val: 'yes', label: '🥂 Sí, allí estaré' }, { val: 'no', label: '😔 No podré asistir' }].map(({ val, label }) => (
+                {[{ val: 'yes', label: 'Sí, allí estaré' }, { val: 'no', label: 'No podré asistir' }].map(({ val, label }) => (
                   <label key={val} className={radioClass(form.attends === val)}>
                     <input type="radio" name="attends" value={val} checked={form.attends === val} onChange={handleChange} className="sr-only" required />
                     {label}
@@ -1048,24 +1096,129 @@ function Asistencia() {
 
             {form.attends === 'yes' && (
               <>
-                {/* Dormir en el albergue */}
+                {/* ¿Vienes con niños? */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Te quedarás a dormir en el albergue? *</label>
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Vienes con niños? *</label>
                   <div className="grid grid-cols-2 gap-3">
-                    {[{ val: 'yes', label: '🛏️ Sí' }, { val: 'no', label: '🏠 No' }].map(({ val, label }) => (
-                      <label key={val} className={radioClass(form.sleepover === val)}>
-                        <input type="radio" name="sleepover" value={val} checked={form.sleepover === val} onChange={handleChange} className="sr-only" required />
+                    {[{ val: 'yes', label: 'Sí' }, { val: 'no', label: 'No' }].map(({ val, label }) => (
+                      <label key={val} className={radioClass(form.hasChildren === val)}>
+                        <input type="radio" name="hasChildren" value={val} checked={form.hasChildren === val} onChange={handleChange} className="sr-only" required />
                         {label}
                       </label>
                     ))}
                   </div>
                 </div>
 
+                {form.hasChildren === 'yes' && (
+                  <div className="flex flex-col gap-4 p-4 bg-[#f2f7f0] rounded-xl border border-[#e1eedd]">
+                    <p className="text-[#3e5c41] text-sm leading-relaxed">
+                      Un texto que ya pondré luego.
+                    </p>
+
+                    <div className="flex flex-col gap-3">
+                      {children.map((child, i) => (
+  <div key={child.id} className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 bg-white rounded-xl border border-[#e1eedd]">
+    <div className="flex-1 flex items-center gap-2">
+      <input
+        value={child.name}
+        onChange={(e) => updateChild(child.id, 'name', e.target.value)}
+        placeholder={`Nombre del niño/a ${i + 1}`}
+        required
+        className="flex-1 min-w-0 border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+      />
+      <button
+        type="button"
+        onClick={() => removeChild(child.id)}
+        className="sm:hidden text-[#3e5c41] hover:text-[#2a3d2c] p-2 shrink-0"
+        aria-label="Eliminar"
+      >
+        <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
+          <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
+        </svg>
+      </button>
+    </div>
+    <div className="flex items-center gap-2">
+      <input
+        value={child.age}
+        onChange={(e) => updateChild(child.id, 'age', e.target.value)}
+        placeholder="Edad"
+        type="number"
+        min={0}
+        required
+        className="w-full sm:w-20 border border-[#c4ddbf] rounded-xl px-3 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+      />
+      <button
+        type="button"
+        onClick={() => removeChild(child.id)}
+        className="hidden sm:block text-[#3e5c41] hover:text-[#2a3d2c] p-2 shrink-0"
+        aria-label="Eliminar"
+      >
+        <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
+          <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+))}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={addChild}
+                      className="flex items-center justify-center gap-2 border-2 border-dashed border-[#c4ddbf] hover:border-[#557a59] text-[#557a59] rounded-xl py-2.5 text-sm font-medium transition-colors"
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+                      </svg>
+                      Añade niñ@
+                    </button>
+
+                    <div className="flex flex-col gap-1">
+                      <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Observaciones *</label>
+                      <textarea
+                        name="childrenNotes" value={form.childrenNotes} onChange={handleChange} rows={2} required
+                        placeholder="Intolerancias, necesidades especiales, etc."
+                        className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Intolerancia alimentaria */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Tienes alguna intolerancia alimentaria/dieta especial? *</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[{ val: 'no', label: 'No tengo' }, { val: 'yes', label: 'Sí tengo' }].map(({ val, label }) => (
+                      <label key={val} className={radioClass(form.intolerance === val)}>
+                        <input type="radio" name="intolerance" value={val} checked={form.intolerance === val} onChange={handleChange} className="sr-only" required />
+                        {label}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {form.intolerance === 'yes' && (
+                  <div className="flex flex-col gap-1">
+                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">
+                      Describe tu intolerancia o dieta *
+                    </label>
+                    <input
+                      name="intoleranceDetail"
+                      value={form.intoleranceDetail}
+                      onChange={handleChange}
+                      required
+                      placeholder="Ej: celiaquía, alergia al marisco, intolerancia a la lactosa…"
+                      className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+                    />
+                  </div>
+                )}
+
                 {/* Autobús */}
                 <div className="flex flex-col gap-2">
                   <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Cogerás el autobús? *</label>
                   <div className="grid grid-cols-2 gap-3">
-                    {[{ val: 'no', label: '🚗 No, iré por mi cuenta' }, { val: 'yes', label: '🚌 Sí' }].map(({ val, label }) => (
+                    {[{ val: 'no', label: 'No, iré por mi cuenta' }, { val: 'yes', label: 'Sí' }].map(({ val, label }) => (
                       <label key={val} className={radioClass(form.bus === val)}>
                         <input type="radio" name="bus" value={val} checked={form.bus === val} onChange={handleChange} className="sr-only" required />
                         {label}
@@ -1074,7 +1227,6 @@ function Asistencia() {
                   </div>
                 </div>
 
-                {/* Tipo de trayecto — solo si coge el bus */}
                 {form.bus === 'yes' && (
                   <div className="flex flex-col gap-2">
                     <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué trayecto necesitas? *</label>
@@ -1092,8 +1244,7 @@ function Asistencia() {
                     </div>
                   </div>
                 )}
-                
-                {/* Horario de vuelta — solo si necesita trayecto de vuelta */}
+
                 {(form.busTrip === 'ida-vuelta' || form.busTrip === 'vuelta') && (
                   <div className="flex flex-col gap-2">
                     <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿A qué hora volverás? *</label>
@@ -1111,41 +1262,24 @@ function Asistencia() {
                   </div>
                 )}
 
-                {/* Intolerancia alimentaria */}
+                {/* Dormir en el albergue */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Tienes alguna intolerancia alimentaria o dieta especial? *</label>
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Te quedarás a dormir en el albergue? *</label>
                   <div className="grid grid-cols-2 gap-3">
-                    {[{ val: 'no', label: '✅ No tengo' }, { val: 'yes', label: '⚠️ Sí tengo' }].map(({ val, label }) => (
-                      <label key={val} className={radioClass(form.intolerance === val)}>
-                        <input type="radio" name="intolerance" value={val} checked={form.intolerance === val} onChange={handleChange} className="sr-only" required />
+                    {[{ val: 'yes', label: 'Sí' }, { val: 'no', label: 'No' }].map(({ val, label }) => (
+                      <label key={val} className={radioClass(form.sleepover === val)}>
+                        <input type="radio" name="sleepover" value={val} checked={form.sleepover === val} onChange={handleChange} className="sr-only" required />
                         {label}
                       </label>
                     ))}
                   </div>
                 </div>
-
-                {/* Detalle intolerancia — aparece solo si "Sí" */}
-                {form.intolerance === 'yes' && (
-                  <div className="flex flex-col gap-1">
-                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">
-                      Describe tu intolerancia o alergia *
-                    </label>
-                    <input
-                      name="intoleranceDetail"
-                      value={form.intoleranceDetail}
-                      onChange={handleChange}
-                      required
-                      placeholder="Ej: celiaquía, alergia al marisco, intolerancia a la lactosa…"
-                      className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-                    />
-                  </div>
-                )}
               </>
             )}
 
             {/* Mensaje */}
             <div className="flex flex-col gap-1">
-              <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Mensaje para los novios (opcional)</label>
+              <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Mensaje para los novios</label>
               <textarea
                 name="message" value={form.message} onChange={handleChange} rows={3}
                 placeholder="Escríbenos algo bonito..."
@@ -1171,8 +1305,8 @@ function Asistencia() {
 function Contact() {
   const ref = useReveal()
   const contacts = [
-    { name: 'Andrés', phone: '600 000 000' },
-    { name: 'Clara', phone: '600 000 001' },
+    { name: 'Clara', phone: '678 35 88 26' },
+    { name: 'Andrés', phone: '645 95 32 75' },
   ]
 
   const toWhatsApp = (phone: string) => `https://wa.me/34${phone.replace(/\s/g, '')}`
@@ -1180,7 +1314,7 @@ function Contact() {
   return (
     <Section id="contacto" className="bg-[#fdfaf5]">
       <div ref={ref} className="max-w-xl mx-auto text-center">
-        <SectionTitle sub="Estamos para ayudar" title="Por si tienes dudas" />
+        <SectionTitle sub="Por si tienes dudas" title="Escríbenos" />
         <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-10">
           Si tienes cualquier duda sobre el evento, el transporte o el alojamiento, no dudes en escribirnos.
         </p>
@@ -1348,6 +1482,7 @@ export default function App() {
       <Venue />
       <HowToArrive />
       <PhotoCascade />
+      <PhotoUpload />
       <Asistencia />
       <Contact />
       <Footer />
