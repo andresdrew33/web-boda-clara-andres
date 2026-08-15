@@ -242,7 +242,7 @@ function Countdown() {
     { value: seconds, label: 'Segundos' },
   ]
   return (
-    <section ref={ref} className="relative py-16 md:py-20 px-5 bg-[#557a59] overflow-hidden">
+    <section ref={ref} className="relative py-16 md:py-20 px-5 bg-[#557a59]/95 overflow-hidden">
       {/* Decoración de fondo — hojas sutiles flotando */}
       <LeafLeft className="absolute -left-6 top-1/2 -translate-y-1/2 w-24 md:w-36 opacity-10 pointer-events-none" />
       <LeafRight className="absolute -right-6 top-1/2 -translate-y-1/2 w-24 md:w-36 opacity-10 pointer-events-none" />
@@ -417,7 +417,7 @@ function PhotoCarousel() {
   }
 
   return (
-    <section ref={sectionRef} className="py-16 bg-[#f2f7f0]">
+    <section ref={sectionRef} className="py-16 bg-[#f2f7f0]/80">
       <div className="text-center mb-10 px-5 reveal">
         <p className="text-[#557a59] uppercase tracking-[0.25em] text-xs font-semibold mb-3">Lo que hemos vivido</p>
         <h2 className="font-display text-4xl md:text-5xl text-[#2a3d2c] font-light italic leading-tight">Nuestro rollo</h2>
@@ -496,7 +496,7 @@ function WeddingInfo() {
   ]
 
   return (
-    <Section id="info" className="bg-[#fdfaf5]">
+    <Section id="info" className="bg-[#fdfaf5]/80">
       <div className="max-w-3xl mx-auto">
         <SectionTitle sub="Detalles del día" title="Lo más importante"/>
         <p className="reveal text-center text-[#3e5c41] text-sm leading-relaxed max-w-lg mx-auto mb-10">
@@ -600,7 +600,7 @@ function OurStory() {
   }
 
   return (
-    <Section id="historia" className="bg-[#f2f7f0]">
+    <Section id="historia" className="bg-[#f2f7f0]/80">
       <div ref={ref} className="max-w-3xl mx-auto flex flex-col items-center">
         <SectionTitle sub="Cómo hemos llegado hasta aquí" title="Kilómetros y aventuras" />
 
@@ -721,28 +721,12 @@ function OurStory() {
 
 // ── Full-width parallax photo ───────────────────────────────────
 function ParallaxPhoto() {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const onScroll = () => {
-      const rect = el.getBoundingClientRect()
-      const progress = -rect.top / (rect.height + window.innerHeight)
-      const img = el.querySelector('img') as HTMLImageElement | null
-      if (img) img.style.transform = `translateY(${progress * 80}px)`
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   return (
-    <div ref={ref} className="relative w-full h-[35vh] md:h-[70vh] overflow-hidden bg-[#c4ddbf]">
+    <div className="relative w-screen h-[35vh] md:h-[70vh] overflow-hidden bg-[#c4ddbf] -ml-[calc((100vw-100%)/2)]">
       <img
-        src={`${import.meta.env.BASE_URL}gallery/grande.jpg`}
+        src={`${import.meta.env.BASE_URL}gallery/grande.png`}
         alt="Clara y Andrés"
-        className="w-full h-[calc(100%+80px)] object-cover object-top will-change-transform"
-        style={{ marginTop: '-40px' }}
+        className="w-full h-full object-cover object-center md:object-bottom"
         loading="lazy"
       />
     </div>
@@ -753,13 +737,13 @@ function ParallaxPhoto() {
 function Venue() {
   const ref = useReveal()
   return (
-    <Section id="lugar" className="bg-[#fdfaf5]">
+    <Section id="lugar" className="bg-[#fdfaf5]/80">
       <div ref={ref} className="max-w-5xl mx-auto">
         <SectionTitle sub="Dónde nos casamos" title="El lugar" />
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div className="reveal reveal-delay-1 rounded-3xl overflow-hidden shadow-lg bg-[#c4ddbf] aspect-[4/3]">
             <img
-              src="https://static.wikia.nocookie.net/spongebob/images/9/9d/Man_Ray_Returns_001.png/revision/latest?cb=20171001162510"
+              src={`${import.meta.env.BASE_URL}gallery/albergue.png`}
               alt="Albergue Virgen de Pedrajas"
               className="w-full h-full object-cover"
               loading="lazy"
@@ -790,7 +774,7 @@ function Venue() {
                 href="https://maps.google.com/?q=Poza de la Sal+Espana"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 bg-[#557a59] text-white px-5 py-2 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-xs font-medium shadow-sm hover:shadow-md w-fit"
+                className="group inline-flex items-center justify-center gap-2 bg-[#557a59]/95 text-white px-5 py-2 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-xs font-medium shadow-sm hover:shadow-md w-fit"
               >
                 Ver en Google Maps
               </a>
@@ -846,7 +830,7 @@ function HowToArrive() {
   ]
 
   return (
-    <Section id="como-llegar" className="bg-[#f2f7f0]">
+    <Section id="como-llegar" className="bg-[#f2f7f0]/80">
       <div ref={ref} className="max-w-3xl mx-auto">
         <SectionTitle sub="Para que no te pierdas" title="¿Cómo llegar?" />
 
@@ -928,7 +912,7 @@ function PhotoCascade() {
   const ref = useReveal()
 
   return (
-    <section ref={ref} className="py-5 px-5 bg-[#fdfaf5] overflow-hidden">
+    <section ref={ref} className="py-5 px-5 bg-[#fdfaf5]/80 overflow-hidden">
       <div className="max-w-md sm:max-w-xl mx-auto relative">
         <div className="grid grid-cols-2 gap-3 sm:gap-6 items-start">
           {/* Foto izquierda — más arriba */}
@@ -936,7 +920,7 @@ function PhotoCascade() {
             <div className="bg-white p-2 sm:p-3 pb-6 sm:pb-8 rounded-sm shadow-2xl -rotate-3">
               <div className="aspect-[4/5] overflow-hidden bg-[#e1eedd]">
                 <img
-                  src={`${import.meta.env.BASE_URL}gallery/foto1.jpg`}
+                  src={`${import.meta.env.BASE_URL}gallery/polaroid1.jpg`}
                   alt=""
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -950,7 +934,7 @@ function PhotoCascade() {
             <div className="bg-white p-2 sm:p-3 pb-6 sm:pb-8 rounded-sm shadow-2xl rotate-3">
               <div className="aspect-[4/5] overflow-hidden bg-[#e1eedd]">
                 <img
-                  src={`${import.meta.env.BASE_URL}gallery/foto2.jpg`}
+                  src={`${import.meta.env.BASE_URL}gallery/polaroid2.jpg`}
                   alt=""
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -970,7 +954,7 @@ function PhotoUpload() {
   const driveUrl = 'https://drive.google.com/drive/folders/17K_Hx308S66g7fxGouypoJfFtH_r95Zw'
 
   return (
-    <Section id="fotos" className="bg-[#f2f7f0]">
+    <Section id="fotos" className="bg-[#f2f7f0]/80">
       <div ref={ref} className="max-w-lg mx-auto text-center">
         <SectionTitle sub="Ayúdanos a recordarlo" title="Comparte tus fotos" />
         <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-8">
@@ -982,7 +966,7 @@ function PhotoUpload() {
             href={driveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#557a59] text-white px-6 py-3 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md"
+            className="inline-flex items-center gap-2 bg-[#557a59]/95 text-white px-6 py-3 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md"
           >
             <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
     <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" strokeLinecap="round" strokeLinejoin="round" />
@@ -1055,7 +1039,7 @@ function Asistencia() {
     }`
 
   return (
-    <Section id="asistencia" className="bg-[#557a59]">
+    <Section id="asistencia" className="bg-[#557a59]/80">
       <div ref={ref} className="max-w-xl mx-auto">
         <div className="reveal text-center mb-10">
           <p className="text-[#c4ddbf] uppercase tracking-[0.25em] text-xs mb-3">Confirmación de asistencia</p>
@@ -1298,7 +1282,7 @@ function Asistencia() {
 
             <button
               type="submit" disabled={submitting}
-              className="w-full bg-[#557a59] text-white py-4 rounded-xl font-semibold hover:bg-[#3e5c41] transition-colors disabled:opacity-60 text-sm uppercase tracking-wider"
+              className="w-full bg-[#557a59]/95 text-white py-4 rounded-xl font-semibold hover:bg-[#3e5c41] transition-colors disabled:opacity-60 text-sm uppercase tracking-wider"
               style={{ cursor: submitting ? 'wait' : 'pointer' }}
             >
               {submitting ? 'Enviando...' : 'Confirmar asistencia'}
@@ -1355,7 +1339,7 @@ function Asistencia() {
                 type="button"
                 onClick={confirmAddChild}
                 disabled={!modalName.trim() || !modalAge.trim()}
-                className="flex-1 bg-[#557a59] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-[#3e5c41] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex-1 bg-[#557a59]/95 text-white rounded-xl py-2.5 text-sm font-medium hover:bg-[#3e5c41] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 style={{ cursor: modalName.trim() && modalAge.trim() ? 'pointer' : 'not-allowed' }}
               >
                 Añadir
@@ -1379,7 +1363,7 @@ function Contact() {
   const toWhatsApp = (phone: string) => `https://wa.me/34${phone.replace(/\s/g, '')}`
 
   return (
-    <Section id="contacto" className="bg-[#fdfaf5]">
+    <Section id="contacto" className="bg-[#fdfaf5]/80">
       <div ref={ref} className="max-w-xl mx-auto text-center">
         <SectionTitle sub="Por si tienes dudas" title="Escríbenos" />
         <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-10">
@@ -1397,7 +1381,7 @@ function Contact() {
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 p-4 bg-white rounded-2xl border border-[#e1eedd] hover:border-[#557a59] hover:shadow-md transition-all duration-300"
               >
-                <div className="w-11 h-11 rounded-full bg-[#e1eedd] flex items-center justify-center shrink-0 group-hover:bg-[#557a59] transition-colors">
+                <div className="w-11 h-11 rounded-full bg-[#e1eedd] flex items-center justify-center shrink-0 group-hover:bg-[#557a59]/95 transition-colors">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#557a59] group-hover:text-white transition-colors">
                     <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.9 9.9 0 004.74 1.2h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m0 1.67c2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.82c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 01-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23m-4.52 4.7c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.03 0 1.2.87 2.36.99 2.52.12.16 1.7 2.72 4.2 3.7 2.08.82 2.5.66 2.95.62.45-.04 1.46-.6 1.66-1.18.2-.58.2-1.08.14-1.18-.06-.1-.22-.16-.46-.28-.24-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.16.24-.64.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.01-.37.11-.49.11-.11.24-.29.36-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43-.14-.01-.3-.01-.46-.01z" />
                   </svg>
@@ -1539,7 +1523,7 @@ function Nav() {
 }
 
 // ── Contour line decorative layer ──────────────────────────────
-function ContourLayer({ top, rotate = 0, flipX = false, flipY = false, opacity = 0.15, size = '1400px' }: {
+function ContourLayer({ top, rotate = 0, flipX = false, flipY = false, opacity = 0.5, size = '1400px' }: {
   top: string
   rotate?: number
   flipX?: boolean
@@ -1560,7 +1544,6 @@ function ContourLayer({ top, rotate = 0, flipX = false, flipY = false, opacity =
         opacity,
         mixBlendMode: 'multiply',
         transform: `rotate(${rotate}deg) scaleX(${flipX ? -1 : 1}) scaleY(${flipY ? -1 : 1})`,
-        zIndex: 5,
       }}
     />
   )
@@ -1578,7 +1561,6 @@ export default function App() {
       <ContourLayer top="60%" rotate={15} />
       <ContourLayer top="72%" rotate={-45} flipX />
       <ContourLayer top="84%" rotate={60} flipY />
-      <ContourLayer top="96%" rotate={0} flipX />
 
       <div className="relative">
         <Nav />
