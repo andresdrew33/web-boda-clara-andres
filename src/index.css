@@ -39,8 +39,8 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c4ddbf;
-  border-radius: 99px;
+  background: #23461c;
+  border-radius: 100px;
 }
 
 .font-display {

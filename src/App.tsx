@@ -722,11 +722,11 @@ function OurStory() {
 // ── Full-width parallax photo ───────────────────────────────────
 function ParallaxPhoto() {
   return (
-    <div className="relative w-screen h-[35vh] md:h-[70vh] overflow-hidden bg-[#c4ddbf] -ml-[calc((100vw-100%)/2)]">
+    <div className="relative w-full h-[35vh] md:h-[70vh] overflow-hidden bg-[#c4ddbf]">
       <img
         src={`${import.meta.env.BASE_URL}gallery/grande.png`}
         alt="Clara y Andrés"
-        className="w-full h-full object-cover object-center md:object-bottom"
+        className="w-full h-full object-cover object-center md:object-[50%_70%]"
         loading="lazy"
       />
     </div>
