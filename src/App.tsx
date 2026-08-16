@@ -970,7 +970,7 @@ function PhotoUpload() {
   const driveUrl = 'https://drive.google.com/drive/folders/17K_Hx308S66g7fxGouypoJfFtH_r95Zw'
 
   return (
-    <Section id="fotos" className="bg-[#f2f7f0]/80">
+    <Section id="album" className="bg-[#f2f7f0]/80">
       <div ref={ref} className="max-w-lg mx-auto text-center">
         <SectionTitle sub="Ayúdanos a recordarlo" title="Comparte tus fotos" />
         <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-8">
@@ -991,6 +991,43 @@ function PhotoUpload() {
             Abrir álbum
           </a>
         </div>
+      </div>
+    </Section>
+  )
+}
+
+// ── Playlist Section ────────────────────────────────────────────
+function PlaylistSection() {
+  const ref = useReveal()
+  const spotifyUrl = 'https://open.spotify.com/playlist/5YBr6pdfDy95BYI4ZrqsOP?si=ec0DeZ9tSxe5z2SyOsXGgw&utm_source=copy-link&pt=62ebb168027c18795ed8d9f15e367ba5&pi=__9p9ONwQg-kz&sci=spotify%3Acard-config%3A5ew24bTu2yCxjiwknYsL2V'
+
+  return (
+    <Section id="playlist" className="bg-[#fdfaf5]/80 relative overflow-hidden">
+      {/* Notas musicales decorativas, muy sutiles */}
+      <span className="absolute top-8 left-[15%] text-[#c4ddbf] text-8xl opacity-40 select-none pointer-events-none rotate-12">♪</span>
+      <span className="absolute top-16 right-[15%] text-[#c4ddbf] text-7xl opacity-30 select-none pointer-events-none -rotate-12">♫</span>
+      <span className="absolute bottom-10 left-[20%] text-[#c4ddbf] text-7xl opacity-30 select-none pointer-events-none rotate-6">♩</span>
+      <span className="absolute bottom-16 right-[15%] text-[#c4ddbf] text-8xl opacity-40 select-none pointer-events-none -rotate-6">♬</span>
+      <div ref={ref} className="relative max-w-lg mx-auto text-center">
+        <SectionTitle sub="Que no falte ambiente" title="Suma tu canción" />
+        <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-2">
+          Únete y añade esa canción que no puede faltar en la fiesta.
+        </p>
+
+        <svg viewBox="0 0 24 32" fill="none" className="reveal reveal-delay-1 w-5 h-7 mx-auto mb-4 text-[#557a59]" xmlns="http://www.w3.org/2000/svg">
+          <line x1="12" y1="0" x2="12" y2="22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M5 16l7 10 7-10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        <a
+          href={spotifyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="reveal reveal-delay-2 inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#557a59] hover:bg-[#3e5c41] shadow-md hover:shadow-lg hover:scale-110 transition-all duration-300"          aria-label="Añadir canción en Spotify"
+        >
+          <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 11-.277-1.215c3.809-.871 7.076-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257c-2.688-1.653-6.786-2.132-9.966-1.166a.78.78 0 11-.454-1.492c3.632-1.102 8.147-.568 11.235 1.329a.78.78 0 01.257 1.072zm.105-2.835C14.692 9.084 9.375 8.9 6.297 9.83a.936.936 0 11-.543-1.79c3.532-1.068 9.404-.861 13.115 1.331a.936.936 0 01-.955 1.596z"/>
+          </svg>
+        </a>
       </div>
     </Section>
   )
@@ -1443,9 +1480,11 @@ function Nav() {
   const links = [
     { href: '#', label: 'Inicio' },
     { href: '#info', label: 'Info' },
-    { href: '#historia', label: 'Historia' },
+    { href: '#historia', label: 'Nuestra Historia' },
     { href: '#lugar', label: 'Lugar' },
     { href: '#como-llegar', label: '¿Como llegar?' },
+    { href: '#album', label: 'Álbum' }, 
+    { href: '#playlist', label: 'Playlist' },
     { href: '#asistencia', label: 'Asistencia' },
     { href: '#contacto', label: 'Contacto' },
   ]
@@ -1589,6 +1628,8 @@ export default function App() {
         <Venue />
         <HowToArrive />
         <PhotoCascade />
+        <PhotoUpload />
+        <PlaylistSection />
         <Asistencia />
         <Contact />
         <Footer />
