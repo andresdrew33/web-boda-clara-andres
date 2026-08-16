@@ -200,3 +200,6 @@ input, textarea, select {
   width: auto;
   height: 100%;
 }
+section[id] {
+  scroll-margin-top: 30px;
+}

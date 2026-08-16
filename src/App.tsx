@@ -468,7 +468,7 @@ function WeddingInfo() {
   const details = [
     {
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.3">
+        <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="1.3">
           <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
         </svg>
       ),
@@ -477,7 +477,7 @@ function WeddingInfo() {
     },
     {
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.3">
+        <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="1.3">
           <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" strokeLinecap="round" />
         </svg>
       ),
@@ -486,7 +486,7 @@ function WeddingInfo() {
     },
     {
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.3">
+        <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="1.3">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" /><circle cx="12" cy="9" r="2.5" />
         </svg>
       ),
@@ -499,20 +499,25 @@ function WeddingInfo() {
     <Section id="info" className="bg-[#fdfaf5]/80">
       <div className="max-w-3xl mx-auto">
         <SectionTitle sub="Detalles del día" title="Lo más importante"/>
-        <p className="reveal text-center text-[#3e5c41] text-sm leading-relaxed max-w-lg mx-auto mb-10">
+        <p className="reveal text-center text-[#3e5c41] text-sm leading-relaxed max-w-lg mx-auto mb-8">
           Aquí tienes toda la información para que no se te escape ningún detalle de nuestro gran día.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="flex flex-col gap-3">
           {details.map(({ icon, title, lines }, i) => (
             <div
               key={title}
-              className={`reveal reveal-delay-${i + 1} text-center p-6 bg-white rounded-2xl border border-[#e1eedd] hover:shadow-md hover:-translate-y-1 transition-all duration-300`}
+              className={`reveal reveal-delay-${i + 1} flex items-center gap-4 p-4 bg-white rounded-xl border border-[#e1eedd] hover:shadow-md transition-all duration-300`}
             >
-              <div className="flex justify-center mb-4 text-[#557a59]">{icon}</div>
-              <h3 className="font-display italic text-lg text-[#2a3d2c] mb-3">{title}</h3>
-              {lines.map((l) => (
-                <p key={l} className="text-[#3e5c41] text-sm leading-relaxed">{l}</p>
-              ))}
+              <div className="flex flex-col items-center gap-1 shrink-0 w-12 text-center">
+                <div className="text-[#557a59]">{icon}</div>
+                <h3 className="font-display italic text-sm text-[#2a3d2c]">{title}</h3>
+              </div>
+              <div className="w-px self-stretch bg-[#e1eedd]" />
+              <div className="flex-1">
+                {lines.map((l) => (
+                  <p key={l} className="text-[#3e5c41] text-xs leading-relaxed">{l}</p>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -603,6 +608,17 @@ function OurStory() {
     <Section id="historia" className="bg-[#f2f7f0]/80">
       <div ref={ref} className="max-w-3xl mx-auto flex flex-col items-center">
         <SectionTitle sub="Cómo hemos llegado hasta aquí" title="Kilómetros y aventuras" />
+
+        <div className="reveal w-11/12 sm:w-2/3 md:w-1/2 mx-auto -mt-12 mb-4 bg-white p-3 pb-8 rounded-sm shadow-2xl -rotate-2">
+          <div className="aspect-[4/5] overflow-hidden bg-[#e1eedd]">
+            <img
+              src={`${import.meta.env.BASE_URL}gallery/gatas.jpg`}
+              alt=""
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
         <div className="reveal w-full bg-white border border-[#e1eedd] rounded-2xl px-8 py-10 text-center shadow-sm">
           <span className="font-display italic text-[#557a59] text-5xl leading-none select-none">"</span>
@@ -1523,7 +1539,7 @@ function Nav() {
 }
 
 // ── Contour line decorative layer ──────────────────────────────
-function ContourLayer({ top, rotate = 0, flipX = false, flipY = false, opacity = 0.5, size = '1400px' }: {
+function ContourLayer({ top, rotate = 0, flipX = false, flipY = false, opacity = 0.5, size = '500%' }: {
   top: string
   rotate?: number
   flipX?: boolean
@@ -1533,7 +1549,7 @@ function ContourLayer({ top, rotate = 0, flipX = false, flipY = false, opacity =
 }) {
   return (
     <div
-      className="absolute left-0 right-0 pointer-events-none"
+      className="absolute left-0 right-0 pointer-events-none md:!bg-[length:75%]"
       style={{
         top,
         height: '900px',
@@ -1554,13 +1570,13 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#f2f7f0] relative overflow-hidden">
       <ContourLayer top="0%" rotate={0} />
-      <ContourLayer top="12%" rotate={35} flipX />
-      <ContourLayer top="24%" rotate={-20} flipY />
-      <ContourLayer top="36%" rotate={90} />
-      <ContourLayer top="48%" rotate={-60} flipX flipY />
-      <ContourLayer top="60%" rotate={15} />
-      <ContourLayer top="72%" rotate={-45} flipX />
-      <ContourLayer top="84%" rotate={60} flipY />
+      <ContourLayer top="12%" rotate={0} flipX />
+      <ContourLayer top="24%" rotate={0} flipY />
+      <ContourLayer top="36%" rotate={0} />
+      <ContourLayer top="48%" rotate={0} flipX flipY />
+      <ContourLayer top="59%" rotate={0} />
+      <ContourLayer top="72%" rotate={0} flipX />
+      <ContourLayer top="82%" rotate={0} flipY />
 
       <div className="relative">
         <Nav />
