@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 
-const WEDDING_DATE = new Date('2027-06-12T06:12:30')
+const WEDDING_DATE = new Date('2027-06-12T13:00:00')
 
 // ── Countdown hook ──────────────────────────────────────────────
 function useCountdown() {
@@ -266,7 +266,7 @@ function Countdown() {
           ))}
         </div>
 
-        <p className="reveal reveal-delay-2 text-white/70 text-xs mt-10">12 de Junio de 2027 · 12:30h</p>
+        <p className="reveal reveal-delay-2 text-white/70 text-xs mt-10">12 de Junio de 2027 · 13:00h</p>
       </div>
     </section>
   )
@@ -491,8 +491,22 @@ function WeddingInfo() {
         </svg>
       ),
       title: 'Lugar',
-      lines: ['Albergue Virgen de Pedrajas ', 'Ctra. Cornudilla s/n', 'Poza de la Sal, Burgos'],
+      lines: ['Albergue Virgen de Pedrajas, Ctra. Cornudilla s/n ', 'Poza de la Sal, Burgos'],
     },
+    {
+  icon: (
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="1.3">
+      <path d="M12 3a2 2 0 100 4 2 2 0 000-4z" />
+      <path d="M12 7v3M12 10L3 17a2 2 0 001.2 3.6h15.6A2 2 0 0021 17l-9-7z" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  title: 'Dress code',
+  lines: [
+    'Guapos, pero no de etiqueta.',
+    'La boda será informal y al aire libre, así que elige un look con el que te veas bien y estés cómodo.',
+    '__warning__'
+  ],
+},
   ]
 
   return (
@@ -514,9 +528,20 @@ function WeddingInfo() {
               </div>
               <div className="w-px self-stretch bg-[#e1eedd]" />
               <div className="flex-1">
-                {lines.map((l) => (
-                  <p key={l} className="text-[#3e5c41] text-xs leading-relaxed">{l}</p>
-                ))}
+              {lines.map((l, idx) => (
+  <p
+    key={l}
+    className={`text-[#3e5c41] text-xs leading-relaxed flex items-start gap-1.5 ${idx > 0 ? 'mt-2' : ''}`}
+  >
+    {l === '__warning__' ? (
+      <>
+       <span className="italic">El césped y los tacones no son amigos {';)'}</span>
+      </>
+    ) : (
+      l
+    )}
+  </p>
+))}
               </div>
             </div>
           ))}
@@ -769,7 +794,14 @@ function Venue() {
             <div>
               <h3 className="font-display text-3xl text-[#2a3d2c] mb-2">Albergue Virgen de Pedrajas</h3>
               <p className="text-[#3e5c41] leading-relaxed"> 
-                Un xxxxxxxxxx xxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxlla xxxxxxxxx xxxxxxxxx xxxxxxxxxxxxxxx cxxxxxx xxxxxxxxx xxxxxxxxxxxxxx xxxxxxx xxxxxxx xxxxxxxxxx xxxl.
+                Un rincón especial y sencillo a las afueras de Poza de la Sal, bajo la silueta de La Reina Dormida. 
+              </p>
+              <p className="text-[#3e5c41] leading-relaxed">
+              Un espacio rodeado de naturaleza y tranquilidad que convertiremos, por un día, en el escenario de nuestra aventura.
+              </p>
+              <br></br>
+              <p className="text-[#3e5c41] leading-relaxed">
+                La celebración al completo será en las zonas ajardinadas del albergue, con todo lo necesario para que solo tengas que preocuparte de disfrutar. 
               </p>
             </div>
 
@@ -782,12 +814,12 @@ function Venue() {
                 </div>
                 <div>
                   <p className="text-[#2a3d2c] font-semibold text-sm">Dirección</p>
-                  <p className="text-[#6d8c70] text-sm">Ctra. de Utrera km 12, Poza de la Sal</p>
+                  <p className="text-[#6d8c70] text-sm">Ctra. Cornudilla s/n, Poza de la Sal</p>
                 </div>
               </div>
 
               <a
-                href="https://maps.google.com/?q=Poza de la Sal+Espana"
+                href="https://maps.google.com/?q=Albergue Virgen de Pedrajas+Poza de la Sal"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center justify-center gap-2 bg-[#557a59]/95 text-white px-5 py-2 rounded-full hover:bg-[#3e5c41] transition-all duration-300 text-xs font-medium shadow-sm hover:shadow-md w-fit"
@@ -816,7 +848,7 @@ function Venue() {
               </div>
 
               <p className="font-display italic text-[#557a59] text-base mt-3 text-center">
-                ¡Trae tu saco/sábana y espíritu de campamento!
+                ¡Trae tu espíritu de campamento!
               </p>
             </div>
             </div>
@@ -882,7 +914,10 @@ function HowToArrive() {
     <div>
       <h3 className="font-display italic text-lg text-[#2a3d2c] mb-1">Servicio de autobús</h3>
       <p className="text-[#3e5c41] text-sm leading-relaxed">
-        Habrá un autobús desde Burgos, con dos puntos de salida. La vuelta se hará en dos turnos: a las 11:00h y a las 02:00h.
+        Habrá un autobús desde Burgos, con dos puntos de salida. 
+        </p>
+        <p className="text-[#3e5c41] text-sm leading-relaxed">
+        La vuelta se hará en dos turnos: a las 23:00h y a las 02:00h.
       </p>
     </div>
   </div>
@@ -1009,7 +1044,7 @@ function PlaylistSection() {
       <span className="absolute bottom-10 left-[20%] text-[#c4ddbf] text-7xl opacity-30 select-none pointer-events-none rotate-6">♩</span>
       <span className="absolute bottom-16 right-[15%] text-[#c4ddbf] text-8xl opacity-40 select-none pointer-events-none -rotate-6">♬</span>
       <div ref={ref} className="relative max-w-lg mx-auto text-center">
-        <SectionTitle sub="Que no falte ambiente" title="Suma tu canción" />
+        <SectionTitle sub="Que no falten temazos" title="Suma tu canción" />
         <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-2">
           Únete y añade esa canción que no puede faltar en la fiesta.
         </p>
@@ -1157,7 +1192,10 @@ function Asistencia() {
                 {form.hasChildren === 'yes' && (
                   <div className="flex flex-col gap-4 p-4 bg-[#f2f7f0] rounded-xl border border-[#e1eedd]">
                     <p className="text-[#3e5c41] text-sm leading-relaxed">
-                      Un texto que ya pondré luego.
+                      Queremos que los peques también se lo pasen bien en este día especial; por eso habrá una zona con monitores llena de sorpresas para que jueguen y vosotros podáis relajaros.
+                    </p>
+                    <p className="text-[#3e5c41] text-sm leading-relaxed">
+                      Para los más pequeños habrá una zona habilitada para guardar y calentar comida, cambiarles o lo que necesitéis.
                     </p>
 
                     {/* Lista de niños añadidos — solo lectura */}
@@ -1205,7 +1243,6 @@ function Asistencia() {
                       <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Observaciones *</label>
                       <textarea
                         name="childrenNotes" value={form.childrenNotes} onChange={handleChange} rows={2} required
-                        placeholder="Intolerancias, necesidades especiales, etc."
                         className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
                       />
                     </div>
@@ -1296,7 +1333,7 @@ function Asistencia() {
     <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿A qué hora volverás? *</label>
     <div className="grid grid-cols-2 gap-3">
       {[
-        { val: '11:00', label: '11:00h' },
+        { val: '23:00', label: '23:00h' },
         { val: '02:00', label: '02:00h' },
       ].map(({ val, label }) => (
         <label key={val} className={radioClass(form.busReturn === val)}>
@@ -1328,7 +1365,7 @@ function Asistencia() {
               <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Mensaje para los novios</label>
               <textarea
                 name="message" value={form.message} onChange={handleChange} rows={3}
-                placeholder="Escríbenos algo bonito..."
+                placeholder="Si te apetece decirnos algo..."
                 className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
               />
             </div>
@@ -1420,7 +1457,7 @@ function Contact() {
       <div ref={ref} className="max-w-xl mx-auto text-center">
         <SectionTitle sub="Por si tienes dudas" title="Escríbenos" />
         <p className="reveal text-[#3e5c41] text-sm leading-relaxed max-w-md mx-auto mb-10">
-          Si tienes cualquier duda sobre el evento, el transporte o el alojamiento, no dudes en escribirnos.
+          Si tienes cualquier duda sobre el evento, transporte, alojamiento o cualquier otra cosa no dudes en escribirnos.
         </p>
         <div className="reveal reveal-delay-1 flex flex-col gap-4 max-w-sm mx-auto">
           {contacts.map((contact) => {
