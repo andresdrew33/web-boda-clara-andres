@@ -1069,7 +1069,6 @@ function PlaylistSection() {
 }
 
 // ── Asistencia ────────────────────────────────────────────────────────
-// ── Asistencia ────────────────────────────────────────────────────────
 function Asistencia() {
   const ref = useReveal()
   const [form, setForm] = useState({
@@ -1180,6 +1179,7 @@ function Asistencia() {
     setChildren((c) => c.filter((child) => child.id !== id))
   }
 
+  const [sentStatus, setSentStatus] = useState<'success' | 'error' | null>(null)
   const handleSubmit = async (e: React.FormEvent) => {
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJTXckjODg-iFhicYGx6TR8gXEsVRmce03uQkuLteHdl_fOL-rOdYSe6t9UADhKQD-WQ/exec'
     e.preventDefault()
@@ -1245,13 +1245,50 @@ function Asistencia() {
         body: JSON.stringify(formDataToSend),
       })
 
-      setSubmitting(false)
-      setSent(true)
+      // Éxito en el envío
+      setSentStatus('success')
+      document.getElementById('asistencia')?.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      })
     } catch (error) {
-      console.error('Error al enviar la respuesta:', error)
-      setSubmitting(false)
-      alert('Hubo un error al guardar tu respuesta. Por favor, inténtalo de nuevo.')
+      console.error('Error al enviar:', error)
+      setSentStatus('error')
     }
+    finally{
+      setSubmitting(false)
+    }
+  }
+
+  // Función para reiniciar el formulario por completo
+  const handleResetForm = () => {
+    // 1. Reseteamos el estado de envío para que vuelva a verse el <form>
+    setSentStatus(null)
+  
+    // 2. Limpiamos los campos del formulario a su estado inicial
+    setForm({
+      name: '',
+      attends: '',
+      hasChildren: '',
+      intolerance: '',
+      intoleranceDetail: '',
+      bus: '',
+      busTrip: '',
+      busStop: '',
+      busReturn: '',
+      sleepover: '',
+      message: '',
+    })
+  
+    // 3. Limpiamos la lista de niños y errores pendientes
+    setChildren([])
+    setErrors({})
+  
+    // 4. (Opcional) Volvemos a enfocar el inicio del formulario por si acaso
+    document.getElementById('asistencia')?.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    })
   }
 
   const radioClass = (active: boolean) =>
@@ -1276,21 +1313,56 @@ function Asistencia() {
           <p className="text-white/80 text-sm mt-4">Por favor confirma antes del 01/03/2027</p>
         </div>
 
-        {sent ? (
-          <div className="reveal text-center bg-white/10 backdrop-blur rounded-3xl p-12 border border-white/20">
-            <div className="flex justify-center mb-4">
-              <svg viewBox="0 0 24 24" fill="none" className="w-10 h-10 text-white" stroke="currentColor" strokeWidth="1.5">
-                <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <h3 className="font-display italic text-2xl text-white mb-3">
-              ¡Gracias, {form.name.split(' ')[0] || 'querido invitado'}!
-            </h3>
-            <p className="text-[#c4ddbf]">Hemos recibido tu confirmación. ¡Nos vemos el 12 de Junio!</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="reveal reveal-delay-1 bg-white rounded-3xl p-6 md:p-10 shadow-xl flex flex-col gap-5" noValidate>
+        {sentStatus === 'success' && (
+  <div className="text-center bg-white/10 backdrop-blur rounded-3xl p-8 md:p-12 border border-white/20">
+    <div className="flex justify-center mb-4">
+      <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+        <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white" stroke="currentColor" strokeWidth="2">
+          <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+    </div> 
 
+    {/* Título fijo para todos */}
+    <h3 className="font-display italic text-2xl md:text-3xl text-white mb-3">
+      ¡Gracias por contestar!
+    </h3>
+
+    {/* Mensaje dinámico según si asiste o no */}
+    <p className="text-[#c4ddbf] text-base mb-8">
+      {form.attends === 'yes'
+        ? '¡Nos vemos el 12 de junio! :)'
+        : '¡Qué pena que no puedas venir! :('}
+    </p>
+
+            <button
+              type="button"
+              onClick={handleResetForm}
+              className="bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-xl text-xs uppercase tracking-wider font-semibold transition-all border border-white/30 cursor-pointer"
+            >
+              Rellenar otro formulario
+            </button>
+          </div>
+        )}
+
+        {sentStatus === 'error' && (
+          <div className="text-center bg-white/10 backdrop-blur rounded-3xl p-8 md:p-12 border border-red-300/30">
+            <div className="flex justify-center mb-4">
+              <div className="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
+                <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-red-200" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            </div>
+            <p className="text-white text-base max-w-md mx-auto leading-relaxed">
+              Ha ocurrido un error al enviar el formulario. Por favor escríbenos por Whatsapp para no perdernos tu respuesta :(
+            </p>
+          </div>
+        )}
+
+        {sentStatus === null && (
+          <form onSubmit={handleSubmit} className="animate-fadeIn bg-white rounded-3xl p-6 md:p-10 shadow-xl flex flex-col gap-5" noValidate>
+          
             {/* 1. Nombre */}
             <div className="flex flex-col gap-1">
               <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Nombre completo*</label>
@@ -1536,7 +1608,7 @@ function Asistencia() {
             >
               {submitting ? 'Enviando...' : 'Confirmar asistencia'}
             </button>
-          </form>
+            </form>
         )}
       </div>
 
