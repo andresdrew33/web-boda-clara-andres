@@ -1069,6 +1069,7 @@ function PlaylistSection() {
 }
 
 // ── Asistencia ────────────────────────────────────────────────────────
+// ── Asistencia ────────────────────────────────────────────────────────
 function Asistencia() {
   const ref = useReveal()
   const [form, setForm] = useState({
@@ -1104,7 +1105,14 @@ function Asistencia() {
   const [submitting, setSubmitting] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const scrollPosition = window.scrollY; // Guardamos DÓNDE estás mirando exactamente
+    
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
+
+    // Forzamos al navegador a quedarse exactamente en el mismo sitio tras renderizar
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollPosition, behavior: 'instant' as ScrollBehavior });
+    });
   }
 
   const openChildModal = () => {
@@ -1203,7 +1211,7 @@ function Asistencia() {
             </div>
 
             {form.attends === 'yes' && (
-              <>
+              <div className="flex flex-col gap-5 animate-fadeIn">
                 {/* ¿Vienes con niños? */}
                 <div className="flex flex-col gap-2">
                   <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Vienes con niños? *</label>
@@ -1218,7 +1226,7 @@ function Asistencia() {
                 </div>
 
                 {form.hasChildren === 'yes' && (
-                  <div className="flex flex-col gap-4 p-4 bg-[#f2f7f0] rounded-xl border border-[#e1eedd]">
+                  <div className="flex flex-col gap-4 p-4 bg-[#f2f7f0] rounded-xl border border-[#e1eedd] animate-fadeIn">
                     <p className="text-[#3e5c41] text-sm leading-relaxed">
                       Queremos que los peques también se lo pasen bien en este día especial; por eso habrá una zona con monitores llena de sorpresas para que jueguen y vosotros podáis relajaros.
                     </p>
@@ -1228,39 +1236,39 @@ function Asistencia() {
 
                     {/* Lista de niños añadidos — solo lectura */}
                     {children.length > 0 && (
-                    <div className="flex flex-col gap-2">
-                      {children.map((child) => (
-                        <div
-                          key={child.id}
-                          className="flex items-start justify-between gap-3 bg-white rounded-xl border border-[#e1eedd] px-4 py-3"
-                        >
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-[#2a3d2c] text-sm font-medium">{child.name}</span>
-                              <span className="text-[#557a59] text-xs bg-[#e1eedd] px-2 py-0.5 rounded-full">{child.age} años</span>
-                            </div>
-                            <p className="text-[#3e5c41] text-xs mt-1">
-                              {child.meal === 'coctel' ? 'Come el cóctel' : 'Lleva su propia comida'}
-                            </p>
-                            <p className="text-[#3e5c41] text-xs mt-0.5">Intolerancias: {child.intolerance}</p>
-                            {child.observations && (
-                              <p className="text-[#3e5c41] text-xs mt-0.5">Obs: {child.observations}</p>
-                            )}
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => removeChild(child.id)}
-                            className="text-[#3e5c41] hover:text-[#2a3d2c] p-1 shrink-0"
-                            aria-label="Eliminar"
+                      <div className="flex flex-col gap-2">
+                        {children.map((child) => (
+                          <div
+                            key={child.id}
+                            className="flex items-start justify-between gap-3 bg-white rounded-xl border border-[#e1eedd] px-4 py-3"
                           >
-                            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
-                              <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
-                            </svg>
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="text-[#2a3d2c] text-sm font-medium">{child.name}</span>
+                                <span className="text-[#557a59] text-xs bg-[#e1eedd] px-2 py-0.5 rounded-full">{child.age} años</span>
+                              </div>
+                              <p className="text-[#3e5c41] text-xs mt-1">
+                                {child.meal === 'coctel' ? 'Come el cóctel' : 'Lleva su propia comida'}
+                              </p>
+                              <p className="text-[#3e5c41] text-xs mt-0.5">Intolerancias: {child.intolerance}</p>
+                              {child.observations && (
+                                <p className="text-[#3e5c41] text-xs mt-0.5">Obs: {child.observations}</p>
+                              )}
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => removeChild(child.id)}
+                              className="text-[#3e5c41] hover:text-[#2a3d2c] p-1 shrink-0"
+                              aria-label="Eliminar"
+                            >
+                              <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
+                                <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
+                              </svg>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     <button
                       type="button"
@@ -1290,7 +1298,7 @@ function Asistencia() {
                 </div>
 
                 {form.intolerance === 'yes' && (
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-1 animate-fadeIn">
                     <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">
                       Describe tu intolerancia o dieta *
                     </label>
@@ -1319,7 +1327,7 @@ function Asistencia() {
                 </div>
 
                 {form.bus === 'yes' && (
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 animate-fadeIn">
                     <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué trayecto necesitas? *</label>
                     <div className="grid grid-cols-3 gap-2">
                       {[
@@ -1337,7 +1345,7 @@ function Asistencia() {
                 )}
 
                 {(form.busTrip === 'ida' || form.busTrip === 'ida-vuelta') && (
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 animate-fadeIn">
                     <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Desde qué parada cogerás el bus de ida? *</label>
                     <div className="grid grid-cols-2 gap-3">
                       {[
@@ -1354,7 +1362,7 @@ function Asistencia() {
                 )}
 
                 {(form.busTrip === 'ida-vuelta' || form.busTrip === 'vuelta') && (
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 animate-fadeIn">
                     <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿A qué hora volverás? *</label>
                     <div className="grid grid-cols-2 gap-3">
                       {[
@@ -1382,7 +1390,7 @@ function Asistencia() {
                     ))}
                   </div>
                 </div>
-              </>
+              </div>
             )}
 
             {/* Mensaje */}
@@ -1441,7 +1449,7 @@ function Asistencia() {
                 />
               </div>
 
-              {/* ¿Tiene alguna intolerancia o dieta especial? */}
+              {/* ¿Tiene alguna intolerancia o dieta especial? (Modal) */}
               <div className="flex flex-col gap-2">
                 <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Tiene alguna intolerancia o dieta especial? *</label>
                 <div className="grid grid-cols-2 gap-2">
@@ -1453,16 +1461,20 @@ function Asistencia() {
                       }`}
                     >
                       <input
-                        type="radio"
-                        name="modalHasIntolerance"
-                        value={val}
-                        checked={modalHasIntolerance === val}
-                        onChange={(e) => {
-                          setModalHasIntolerance(e.target.value)
-                          if (e.target.value === 'no') setModalIntolerance('')
-                        }}
-                        className="sr-only"
-                      />
+    type="radio"
+    name="modalHasIntolerance"
+    value={val}
+    checked={modalHasIntolerance === val}
+    onChange={(e) => {
+      const scrollPos = window.scrollY;
+      setModalHasIntolerance(e.target.value)
+      if (e.target.value === 'no') setModalIntolerance('')
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollPos, behavior: 'instant' as ScrollBehavior });
+      });
+    }}
+    className="sr-only"
+  />
                       {label}
                     </label>
                   ))}
@@ -1470,7 +1482,7 @@ function Asistencia() {
               </div>
 
               {modalHasIntolerance === 'yes' && (
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 animate-fadeIn">
                   <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Describe su intolerancia o dieta *</label>
                   <input
                     value={modalIntolerance}
@@ -1514,7 +1526,7 @@ function Asistencia() {
                   value={modalObservations}
                   onChange={(e) => setModalObservations(e.target.value)}
                   rows={2}
-                  placeholder="Otras necesidades"
+                  placeholder="Necesidades especiales, trona, etc."
                   className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
                 />
               </div>
