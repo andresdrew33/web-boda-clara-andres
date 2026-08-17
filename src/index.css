@@ -218,3 +218,7 @@ section[id] {
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out forwards;
 }
+html {
+  scroll-behavior: smooth;
+  overflow-anchor: none; /* Esto evita que el navegador intente anclar el scroll a los nuevos elementos */
+}
