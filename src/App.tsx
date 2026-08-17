@@ -1180,7 +1180,8 @@ function Asistencia() {
     setChildren((c) => c.filter((child) => child.id !== id))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJTXckjODg-iFhicYGx6TR8gXEsVRmce03uQkuLteHdl_fOL-rOdYSe6t9UADhKQD-WQ/exec'
     e.preventDefault()
     const newErrors: Record<string, boolean> = {}
 
@@ -1233,12 +1234,24 @@ function Asistencia() {
       ...form,
       children: children,
     }
-    console.log("Datos a enviar:", formDataToSend)
 
-    setTimeout(() => {
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Necesario para evitar bloqueos CORS con Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataToSend),
+      })
+
       setSubmitting(false)
       setSent(true)
-    }, 1200)
+    } catch (error) {
+      console.error('Error al enviar la respuesta:', error)
+      setSubmitting(false)
+      alert('Hubo un error al guardar tu respuesta. Por favor, inténtalo de nuevo.')
+    }
   }
 
   const radioClass = (active: boolean) =>
