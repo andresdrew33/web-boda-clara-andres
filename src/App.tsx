@@ -1457,6 +1457,20 @@ function Asistencia() {
                         </label>
                       ))}
                     </div>
+                    {/* Texto informativo cuando seleccionan Sí */}
+                      {form.sleepover === 'yes' && (
+                        <div className="mt-2 p-4 bg-[#f2f7f0] border border-[#e1eedd] rounded-xl text-[#3e5c41] text-xs leading-relaxed flex flex-col gap-2 animate-fadeIn">
+                          <p>
+                            Recuerda que se trata de un albergue con habitaciones y baños compartidos (intentaremos que estéis lo más cómodos posibles).
+                          </p>
+                          <p className="font-semibold">
+                            El alojamiento tiene un coste de 5€/persona.
+                          </p>
+                          <p>
+                            Para terminar de confirmar la cama escríbenos a cualquiera de los dos :)
+                          </p>
+                        </div>
+                      )}
                   </div>
                 </div>
               )}
