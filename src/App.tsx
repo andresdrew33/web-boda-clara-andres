@@ -1069,19 +1069,20 @@ function PlaylistSection() {
 }
 
 // ── Asistencia ────────────────────────────────────────────────────────
+// ── Asistencia ────────────────────────────────────────────────────────
 function Asistencia() {
   const ref = useReveal()
   const [form, setForm] = useState({
     name: '',
     attends: '',
     hasChildren: '',
-    sleepover: '',
+    intolerance: '',
+    intoleranceDetail: '',
     bus: '',
     busTrip: '',
     busStop: '',
     busReturn: '',
-    intolerance: '',
-    intoleranceDetail: '',
+    sleepover: '',
     message: '',
   })
   const [errors, setErrors] = useState<Record<string, boolean>>({})
@@ -1109,15 +1110,35 @@ function Asistencia() {
     const scrollPosition = window.scrollY;
     const { name, value } = e.target;
     
-    setForm((f) => ({ ...f, [name]: value }))
+    setForm((f) => {
+      const updated = { ...f, [name]: value };
 
-    // Si el usuario cambia "hasChildren" a "no", limpiamos la lista de niños añadidos
-    if (name === 'hasChildren' && value === 'no') {
-      setChildren([]);
-    }
+      // Limpiezas en cascada según cambios de estado
+      if (name === 'hasChildren' && value === 'no') {
+        setChildren([]);
+      }
+      if (name === 'intolerance' && value === 'no') {
+        updated.intoleranceDetail = '';
+      }
+      if (name === 'bus') {
+        if (value === 'no') {
+          updated.busTrip = '';
+          updated.busStop = '';
+          updated.busReturn = '';
+        }
+      }
+      if (name === 'busTrip') {
+        if (value === 'ida') updated.busReturn = '';
+        if (value === 'vuelta') updated.busStop = '';
+      }
+
+      return updated;
+    })
+
     if (errors[name]) {
-    setErrors((prev) => ({ ...prev, [name]: false }));
-  }
+      setErrors((prev) => ({ ...prev, [name]: false }));
+    }
+
     requestAnimationFrame(() => {
       window.scrollTo({ top: scrollPosition, behavior: 'instant' as ScrollBehavior });
     });
@@ -1167,17 +1188,21 @@ function Asistencia() {
     if (!form.name.trim()) newErrors.name = true
     if (!form.attends) newErrors.attends = true
 
-    // Si asiste, validamos el resto de campos dependientes
+    // 2. Si asiste, validamos el flujo condicional en orden
     if (form.attends === 'yes') {
+      // ¿Niños?
       if (!form.hasChildren) newErrors.hasChildren = true
-      
       if (form.hasChildren === 'yes' && children.length === 0) {
-        newErrors.hasChildrenList = true // Por si marca que sí pero no añade ningún niño
+        newErrors.hasChildrenList = true
       }
 
+      // Intolerancias
       if (!form.intolerance) newErrors.intolerance = true
-      if (form.intolerance === 'yes' && !form.intoleranceDetail.trim()) newErrors.intoleranceDetail = true
+      if (form.intolerance === 'yes' && !form.intoleranceDetail.trim()) {
+        newErrors.intoleranceDetail = true
+      }
 
+      // Autobús
       if (!form.bus) newErrors.bus = true
       if (form.bus === 'yes') {
         if (!form.busTrip) newErrors.busTrip = true
@@ -1189,17 +1214,18 @@ function Asistencia() {
         }
       }
 
+      // Albergue
       if (!form.sleepover) newErrors.sleepover = true
     }
 
-    // 2. Si hay errores, bloqueamos el envío y mostramos el popup
+    // 3. Bloqueo en caso de error
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       setShowErrorModal(true)
       return
     }
 
-    // 3. Si todo está correcto, limpiamos errores y enviamos
+    // 4. Envío de datos
     setErrors({})
     setSubmitting(true)
     
@@ -1220,7 +1246,6 @@ function Asistencia() {
       active ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
     }`
 
-  // Función auxiliar para las clases del input con error sutil
   const inputErrorClass = (fieldName: string, baseClass: string) => {
     const hasErr = errors[fieldName];
     return `${baseClass} ${
@@ -1228,142 +1253,144 @@ function Asistencia() {
     }`;
   };
 
-    return (
-      <Section id="asistencia" className="bg-[#557a59]/80">
-        <div ref={ref} className="max-w-xl mx-auto">
-          <div className="reveal text-center mb-10">
-            <p className="text-[#c4ddbf] uppercase tracking-[0.25em] text-xs mb-3">Confirmación de asistencia</p>
-            <h2 className="font-display text-4xl md:text-5xl text-white font-light italic leading-tight">¿Vendrás?</h2>
-            <div className="w-14 h-px bg-gradient-to-r from-transparent via-[#c4ddbf] to-transparent mx-auto mt-5" />
-            <p className="text-white/80 text-sm mt-4">Por favor confirma antes del 01/03/2027</p>
-          </div>
-    
-          {sent ? (
-            <div className="reveal text-center bg-white/10 backdrop-blur rounded-3xl p-12 border border-white/20">
-              <div className="flex justify-center mb-4">
-                <svg viewBox="0 0 24 24" fill="none" className="w-10 h-10 text-white" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <h3 className="font-display italic text-2xl text-white mb-3">
-                ¡Gracias, {form.name.split(' ')[0] || 'querido invitado'}!
-              </h3>
-              <p className="text-[#c4ddbf]">Hemos recibido tu confirmación. ¡Nos vemos el 12 de Junio!</p>
+  return (
+    <Section id="asistencia" className="bg-[#557a59]/80">
+      <div ref={ref} className="max-w-xl mx-auto">
+        <div className="reveal text-center mb-10">
+          <p className="text-[#c4ddbf] uppercase tracking-[0.25em] text-xs mb-3">Confirmación de asistencia</p>
+          <h2 className="font-display text-4xl md:text-5xl text-white font-light italic leading-tight">¿Vendrás?</h2>
+          <div className="w-14 h-px bg-gradient-to-r from-transparent via-[#c4ddbf] to-transparent mx-auto mt-5" />
+          <p className="text-white/80 text-sm mt-4">Por favor confirma antes del 01/03/2027</p>
+        </div>
+
+        {sent ? (
+          <div className="reveal text-center bg-white/10 backdrop-blur rounded-3xl p-12 border border-white/20">
+            <div className="flex justify-center mb-4">
+              <svg viewBox="0 0 24 24" fill="none" className="w-10 h-10 text-white" stroke="currentColor" strokeWidth="1.5">
+                <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="reveal reveal-delay-1 bg-white rounded-3xl p-6 md:p-10 shadow-xl flex flex-col gap-5" noValidate>
-    
-              {/* Nombre */}
-              <div className="flex flex-col gap-1">
-                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Nombre completo*</label>
-                <input
-                  name="name" value={form.name} onChange={handleChange}
-                  placeholder="Tu nombre y apellidos"
-                  className={inputErrorClass('name', "border rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]")}
-                />
+            <h3 className="font-display italic text-2xl text-white mb-3">
+              ¡Gracias, {form.name.split(' ')[0] || 'querido invitado'}!
+            </h3>
+            <p className="text-[#c4ddbf]">Hemos recibido tu confirmación. ¡Nos vemos el 12 de Junio!</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="reveal reveal-delay-1 bg-white rounded-3xl p-6 md:p-10 shadow-xl flex flex-col gap-5" noValidate>
+
+            {/* 1. Nombre */}
+            <div className="flex flex-col gap-1">
+              <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Nombre completo*</label>
+              <input
+                name="name" value={form.name} onChange={handleChange}
+                placeholder="Tu nombre y apellidos"
+                className={inputErrorClass('name', "border rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]")}
+              />
+            </div>
+
+            {/* 2. Asistencia */}
+            <div className="flex flex-col gap-2">
+              <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Asistirás?*</label>
+              <div className="grid grid-cols-2 gap-3">
+                {[{ val: 'yes', label: 'Sí, allí estaré' }, { val: 'no', label: 'No podré asistir' }].map(({ val, label }) => (
+                  <label key={val} className={`${radioClass(form.attends === val)} ${errors.attends ? '!border-red-300 bg-red-50/20' : ''}`}>
+                    <input type="radio" name="attends" value={val} checked={form.attends === val} onChange={handleChange} className="sr-only" />
+                    {label}
+                  </label>
+                ))}
               </div>
-    
-              {/* Asistencia*/}
-              <div className="flex flex-col gap-2">
-                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Asistirás?*</label>
-                <div className="grid grid-cols-2 gap-3">
-                  {[{ val: 'yes', label: 'Sí, allí estaré' }, { val: 'no', label: 'No podré asistir' }].map(({ val, label }) => (
-                    <label key={val} className={`${radioClass(form.attends === val)} ${errors.attends ? '!border-red-300 bg-red-50/20' : ''}`}>
-                      <input type="radio" name="attends" value={val} checked={form.attends === val} onChange={handleChange} className="sr-only" />
-                      {label}
-                    </label>
-                  ))}
+            </div>
+
+            {/* BLOQUE CONDICIONAL: Solo si asiste */}
+            {form.attends === 'yes' && (
+              <div className="flex flex-col gap-5 animate-fadeIn">
+                
+                {/* 3. Niños */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Vienes con niños?*</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[{ val: 'yes', label: 'Sí' }, { val: 'no', label: 'No' }].map(({ val, label }) => (
+                      <label key={val} className={`${radioClass(form.hasChildren === val)} ${errors.hasChildren ? '!border-red-300 bg-red-50/20' : ''}`}>
+                        <input type="radio" name="hasChildren" value={val} checked={form.hasChildren === val} onChange={handleChange} className="sr-only" />
+                        {label}
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
-    
-              {form.attends === 'yes' && (
-                <div className="flex flex-col gap-5 animate-fadeIn">
-                  {/* ¿Vienes con niños? */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Vienes con niños?*</label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[{ val: 'yes', label: 'Sí' }, { val: 'no', label: 'No' }].map(({ val, label }) => (
-                        <label key={val} className={`${radioClass(form.hasChildren === val)} ${errors.hasChildren ? '!border-red-300 bg-red-50/20' : ''}`}>
-                          <input type="radio" name="hasChildren" value={val} checked={form.hasChildren === val} onChange={handleChange} className="sr-only" />
-                          {label}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-    
-                  {form.hasChildren === 'yes' && (
-                    <div className={`flex flex-col gap-4 p-4 bg-[#f2f7f0] rounded-xl border animate-fadeIn transition-colors ${errors.hasChildrenList ? 'border-red-300 bg-red-50/20' : 'border-[#e1eedd]'}`}>
-                      <p className="text-[#3e5c41] text-sm leading-relaxed">
-                        Queremos que los peques también se lo pasen bien en este día especial; por eso habrá una zona con monitores llena de sorpresas para que jueguen y vosotros podáis relajaros.
-                      </p>
-                      <p className="text-[#3e5c41] text-sm leading-relaxed">
-                        Para los más pequeños habrá una zona habilitada para guardar y calentar comida, cambiarles o lo que necesitéis.
-                      </p>
-    
-                      {/* Lista de niños añadidos — solo lectura */}
-                      {children.length > 0 && (
-                        <div className="flex flex-col gap-2">
-                          {children.map((child) => (
-                            <div
-                              key={child.id}
-                              className="flex items-start justify-between gap-3 bg-white rounded-xl border border-[#e1eedd] px-4 py-3"
-                            >
-                              <div className="min-w-0">
-                                <div className="flex items-center gap-2 flex-wrap">
-                                  <span className="text-[#2a3d2c] text-sm font-medium">{child.name}</span>
-                                  <span className="text-[#557a59] text-xs bg-[#e1eedd] px-2 py-0.5 rounded-full">{child.age} años</span>
-                                </div>
-                                <p className="text-[#3e5c41] text-xs mt-1">
-                                  {child.meal === 'coctel' ? 'Come el cóctel' : 'Lleva su propia comida'}
-                                </p>
-                                <p className="text-[#3e5c41] text-xs mt-0.5">Intolerancias: {child.intolerance}</p>
-                                {child.observations && (
-                                  <p className="text-[#3e5c41] text-xs mt-0.5">Obs: {child.observations}</p>
-                                )}
+
+                {/* Sub-bloque: Añadir Niños */}
+                {form.hasChildren === 'yes' && (
+                  <div className={`flex flex-col gap-4 p-4 bg-[#f2f7f0] rounded-xl border animate-fadeIn transition-colors ${errors.hasChildrenList ? 'border-red-300 bg-red-50/20' : 'border-[#e1eedd]'}`}>
+                    <p className="text-[#3e5c41] text-sm leading-relaxed">
+                      Queremos que los peques también se lo pasen bien en este día especial; por eso habrá una zona con monitores llena de sorpresas para que jueguen y vosotros podáis relajaros.
+                    </p>
+                    <p className="text-[#3e5c41] text-sm leading-relaxed">
+                      Para los más pequeños habrá una zona habilitada para guardar y calentar comida, cambiarles o lo que necesitéis.
+                    </p>
+
+                    {children.length > 0 && (
+                      <div className="flex flex-col gap-2">
+                        {children.map((child) => (
+                          <div
+                            key={child.id}
+                            className="flex items-start justify-between gap-3 bg-white rounded-xl border border-[#e1eedd] px-4 py-3"
+                          >
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="text-[#2a3d2c] text-sm font-medium">{child.name}</span>
+                                <span className="text-[#557a59] text-xs bg-[#e1eedd] px-2 py-0.5 rounded-full">{child.age} años</span>
                               </div>
-                              <button
-                                type="button"
-                                onClick={() => removeChild(child.id)}
-                                className="text-[#3e5c41] hover:text-[#2a3d2c] p-1 shrink-0"
-                                aria-label="Eliminar"
-                              >
-                                <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
-                                  <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
-                                </svg>
-                              </button>
+                              <p className="text-[#3e5c41] text-xs mt-1">
+                                {child.meal === 'coctel' ? 'Come el cóctel' : 'Lleva su propia comida'}
+                              </p>
+                              <p className="text-[#3e5c41] text-xs mt-0.5">Intolerancias: {child.intolerance}</p>
+                              {child.observations && (
+                                <p className="text-[#3e5c41] text-xs mt-0.5">Obs: {child.observations}</p>
+                              )}
                             </div>
-                          ))}
-                        </div>
-                      )}
-    
-                      <button
-                        type="button"
-                        onClick={openChildModal}
-                        className="flex items-center justify-center gap-2 border-2 border-dashed border-[#c4ddbf] hover:border-[#557a59] text-[#557a59] rounded-xl py-2.5 text-sm font-medium transition-colors"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
-                          <path d="M12 5v14M5 12h14" strokeLinecap="round" />
-                        </svg>
-                        Añade niñ@
-                      </button>
-                    </div>
-                  )}
-    
-                  {/* Intolerancia alimentaria */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Tienes alguna intolerancia alimentaria/dieta especial?*</label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[{ val: 'no', label: 'No tengo' }, { val: 'yes', label: 'Sí tengo' }].map(({ val, label }) => (
-                        <label key={val} className={`${radioClass(form.intolerance === val)} ${errors.intolerance ? '!border-red-300 bg-red-50/20' : ''}`}>
-                          <input type="radio" name="intolerance" value={val} checked={form.intolerance === val} onChange={handleChange} className="sr-only" />
-                          {label}
-                        </label>
-                      ))}
-                    </div>
+                            <button
+                              type="button"
+                              onClick={() => removeChild(child.id)}
+                              className="text-[#3e5c41] hover:text-[#2a3d2c] p-1 shrink-0"
+                              aria-label="Eliminar"
+                            >
+                              <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
+                                <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
+                              </svg>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={openChildModal}
+                      className="flex items-center justify-center gap-2 border-2 border-dashed border-[#c4ddbf] hover:border-[#557a59] text-[#557a59] rounded-xl py-2.5 text-sm font-medium transition-colors cursor-pointer"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+                      </svg>
+                      Añade niñ@
+                    </button>
                   </div>
-    
-                  {form.intolerance === 'yes' && (
+                )}
+
+                {/* 4. Intolerancias Adulto */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Tienes alguna intolerancia alimentaria/dieta especial?*</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[{ val: 'no', label: 'No tengo' }, { val: 'yes', label: 'Sí tengo' }].map(({ val, label }) => (
+                      <label key={val} className={`${radioClass(form.intolerance === val)} ${errors.intolerance ? '!border-red-300 bg-red-50/20' : ''}`}>
+                        <input type="radio" name="intolerance" value={val} checked={form.intolerance === val} onChange={handleChange} className="sr-only" />
+                        {label}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sub-bloque: Detalle Intolerancia */}
+                {form.intolerance === 'yes' && (
                   <div className="flex flex-col gap-1 animate-fadeIn">
                     <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">
                       Describe tu intolerancia o dieta*
@@ -1380,22 +1407,24 @@ function Asistencia() {
                     />
                   </div>
                 )}
-                    
-                  {/* Autobús */}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Cogerás el autobús?*</label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[{ val: 'no', label: 'No, iré por mi cuenta' }, { val: 'yes', label: 'Sí' }].map(({ val, label }) => (
-                        <label key={val} className={`${radioClass(form.bus === val)} ${errors.bus ? '!border-red-300 bg-red-50/20' : ''}`}>
-                          <input type="radio" name="bus" value={val} checked={form.bus === val} onChange={handleChange} className="sr-only" />
-                          {label}
-                        </label>
-                      ))}
-                    </div>
+
+                {/* 5. Autobús */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Cogerás el autobús?*</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[{ val: 'no', label: 'No, iré por mi cuenta' }, { val: 'yes', label: 'Sí' }].map(({ val, label }) => (
+                      <label key={val} className={`${radioClass(form.bus === val)} ${errors.bus ? '!border-red-300 bg-red-50/20' : ''}`}>
+                        <input type="radio" name="bus" value={val} checked={form.bus === val} onChange={handleChange} className="sr-only" />
+                        {label}
+                      </label>
+                    ))}
                   </div>
-    
-                  {form.bus === 'yes' && (
-                    <div className="flex flex-col gap-2 animate-fadeIn">
+                </div>
+
+                {/* Sub-bloque: Trayectos y paradas */}
+                {form.bus === 'yes' && (
+                  <div className="flex flex-col gap-5 animate-fadeIn">
+                    <div className="flex flex-col gap-2">
                       <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué trayecto necesitas?*</label>
                       <div className="grid grid-cols-3 gap-2">
                         {[
@@ -1410,263 +1439,264 @@ function Asistencia() {
                         ))}
                       </div>
                     </div>
-                  )}
-    
-                  {(form.busTrip === 'ida' || form.busTrip === 'ida-vuelta') && (
-                    <div className="flex flex-col gap-2 animate-fadeIn">
-                      <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Desde qué parada cogerás el bus de ida?*</label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {[
-                          { val: 'centro', label: 'Centro 11:30h' },
-                          { val: 'gamonal', label: 'Gamonal 11:45h' },
-                        ].map(({ val, label }) => (
-                          <label key={val} className={`${radioClass(form.busStop === val)} ${errors.busStop ? '!border-red-300 bg-red-50/20' : ''}`}>
-                            <input type="radio" name="busStop" value={val} checked={form.busStop === val} onChange={handleChange} className="sr-only" />
-                            {label}
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-    
-                  {(form.busTrip === 'ida-vuelta' || form.busTrip === 'vuelta') && (
-                    <div className="flex flex-col gap-2 animate-fadeIn">
-                      <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿A qué hora volverás?*</label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {[
-                          { val: '23:00', label: '23:00h' },
-                          { val: '02:00', label: '02:00h' },
-                        ].map(({ val, label }) => (
-                          <label key={val} className={`${radioClass(form.busReturn === val)} ${errors.busReturn ? '!border-red-300 bg-red-50/20' : ''}`}>
-                            <input type="radio" name="busReturn" value={val} checked={form.busReturn === val} onChange={handleChange} className="sr-only" />
-                            {label}
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-    
-                  {/* Dormir en el albergue*/}
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Te quedarás a dormir en el albergue?*</label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[{ val: 'yes', label: 'Sí' }, { val: 'no', label: 'No' }].map(({ val, label }) => (
-                        <label key={val} className={`${radioClass(form.sleepover === val)} ${errors.sleepover ? '!border-red-300 bg-red-50/20' : ''}`}>
-                          <input type="radio" name="sleepover" value={val} checked={form.sleepover === val} onChange={handleChange} className="sr-only" />
-                          {label}
-                        </label>
-                      ))}
-                    </div>
-                    {/* Texto informativo cuando seleccionan Sí */}
-                      {form.sleepover === 'yes' && (
-                        <div className="mt-2 p-4 bg-[#f2f7f0] border border-[#e1eedd] rounded-xl text-[#3e5c41] text-xs leading-relaxed flex flex-col gap-2 animate-fadeIn">
-                          <p>
-                            Recuerda que se trata de un albergue con habitaciones y baños compartidos (intentaremos que estéis lo más cómodos posibles).
-                          </p>
-                          <p className="font-semibold">
-                            El alojamiento tiene un coste de 5€/persona.
-                          </p>
-                          <p>
-                            Para terminar de confirmar la cama escríbenos a cualquiera de los dos :)
-                          </p>
+
+                    {(form.busTrip === 'ida' || form.busTrip === 'ida-vuelta') && (
+                      <div className="flex flex-col gap-2 animate-fadeIn">
+                        <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Desde qué parada cogerás el bus de ida?*</label>
+                        <div className="grid grid-cols-2 gap-3">
+                          {[
+                            { val: 'centro', label: 'Centro 11:30h' },
+                            { val: 'gamonal', label: 'Gamonal 11:45h' },
+                          ].map(({ val, label }) => (
+                            <label key={val} className={`${radioClass(form.busStop === val)} ${errors.busStop ? '!border-red-300 bg-red-50/20' : ''}`}>
+                              <input type="radio" name="busStop" value={val} checked={form.busStop === val} onChange={handleChange} className="sr-only" />
+                              {label}
+                            </label>
+                          ))}
                         </div>
-                      )}
+                      </div>
+                    )}
+
+                    {(form.busTrip === 'ida-vuelta' || form.busTrip === 'vuelta') && (
+                      <div className="flex flex-col gap-2 animate-fadeIn">
+                        <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿A qué hora volverás?*</label>
+                        <div className="grid grid-cols-2 gap-3">
+                          {[
+                            { val: '23:00', label: '23:00h' },
+                            { val: '02:00', label: '02:00h' },
+                          ].map(({ val, label }) => (
+                            <label key={val} className={`${radioClass(form.busReturn === val)} ${errors.busReturn ? '!border-red-300 bg-red-50/20' : ''}`}>
+                              <input type="radio" name="busReturn" value={val} checked={form.busReturn === val} onChange={handleChange} className="sr-only" />
+                              {label}
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
+                )}
+
+                {/* 6. Albergue */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Te quedarás a dormir en el albergue?*</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[{ val: 'yes', label: 'Sí' }, { val: 'no', label: 'No' }].map(({ val, label }) => (
+                      <label key={val} className={`${radioClass(form.sleepover === val)} ${errors.sleepover ? '!border-red-300 bg-red-50/20' : ''}`}>
+                        <input type="radio" name="sleepover" value={val} checked={form.sleepover === val} onChange={handleChange} className="sr-only" />
+                        {label}
+                      </label>
+                    ))}
+                  </div>
+                  
+                  {form.sleepover === 'yes' && (
+                    <div className="mt-2 p-4 bg-[#f2f7f0] border border-[#e1eedd] rounded-xl text-[#3e5c41] text-xs leading-relaxed flex flex-col gap-2 animate-fadeIn">
+                      <p>
+                        Recuerda que se trata de un albergue con habitaciones y baños compartidos (intentaremos que estéis lo más cómodos posibles).
+                      </p>
+                      <p className="font-semibold">
+                        El alojamiento tiene un coste de 5€/persona.
+                      </p>
+                      <p>
+                        Para terminar de confirmar la cama escríbenos a cualquiera de los dos :)
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            )}
+
+            {/* 7. Mensaje opcional (siempre visible) */}
+            <div className="flex flex-col gap-1">
+              <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Mensaje para los novios</label>
+              <textarea
+                name="message" value={form.message} onChange={handleChange} rows={3}
+                placeholder="Si te apetece decirnos algo..."
+                className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
+              />
+            </div>
+
+            <button
+              type="submit" disabled={submitting}
+              className="w-full bg-[#557a59]/95 text-white py-4 rounded-xl font-semibold hover:bg-[#3e5c41] transition-colors disabled:opacity-60 text-sm uppercase tracking-wider cursor-pointer"
+              style={{ cursor: submitting ? 'wait' : 'pointer' }}
+            >
+              {submitting ? 'Enviando...' : 'Confirmar asistencia'}
+            </button>
+          </form>
+        )}
+      </div>
+
+      {/* Modal para añadir niños */}
+      {showChildModal && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center px-5"
+          onClick={() => setShowChildModal(false)}
+        >
+          <div
+            className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl max-h-[85vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="font-display italic text-xl text-[#2a3d2c] mb-4 text-center">Añadir niño/a</h3>
+
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1">
+                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Nombre*</label>
+                <input
+                  value={modalName}
+                  onChange={(e) => setModalName(e.target.value)}
+                  placeholder="Nombre del niño/a"
+                  autoFocus
+                  className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Edad*</label>
+                <input
+                  value={modalAge}
+                  onChange={(e) => setModalAge(e.target.value.replace(/\D/g, '').slice(0, 2))}
+                  placeholder="Edad"
+                  inputMode="numeric"
+                  className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Tiene alguna intolerancia o dieta especial? *</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[{ val: 'no', label: 'No' }, { val: 'yes', label: 'Sí' }].map(({ val, label }) => (
+                    <label
+                      key={val}
+                      className={`flex items-center justify-center text-center gap-2 px-3 py-2.5 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all leading-tight ${
+                        modalHasIntolerance === val ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="modalHasIntolerance"
+                        value={val}
+                        checked={modalHasIntolerance === val}
+                        onChange={(e) => {
+                          const scrollPos = window.scrollY;
+                          setModalHasIntolerance(e.target.value)
+                          if (e.target.value === 'no') setModalIntolerance('')
+                          requestAnimationFrame(() => {
+                            window.scrollTo({ top: scrollPos, behavior: 'instant' as ScrollBehavior });
+                          });
+                        }}
+                        className="sr-only"
+                      />
+                      {label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {modalHasIntolerance === 'yes' && (
+                <div className="flex flex-col gap-1 animate-fadeIn">
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Describe su intolerancia o dieta*</label>
+                  <input
+                    value={modalIntolerance}
+                    onChange={(e) => setModalIntolerance(e.target.value)}
+                    placeholder="Ej: celiaquía, lactosa…"
+                    className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+                  />
                 </div>
               )}
-    
-              {/* Mensaje */}
+
+              <div className="flex flex-col gap-2">
+                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué va a comer?*</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { val: 'coctel', label: 'Cóctel' },
+                    { val: 'propia', label: 'Lleva su comida' },
+                  ].map(({ val, label }) => (
+                    <label
+                      key={val}
+                      className={`flex items-center justify-center text-center gap-2 px-3 py-2.5 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all leading-tight ${
+                        modalMeal === val ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="modalMeal"
+                        value={val}
+                        checked={modalMeal === val}
+                        onChange={(e) => setModalMeal(e.target.value)}
+                        className="sr-only"
+                      />
+                      {label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex flex-col gap-1">
-                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Mensaje para los novios</label>
+                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Observaciones</label>
                 <textarea
-                  name="message" value={form.message} onChange={handleChange} rows={3}
-                  placeholder="Si te apetece decirnos algo..."
+                  value={modalObservations}
+                  onChange={(e) => setModalObservations(e.target.value)}
+                  rows={2}
+                  placeholder="Necesidades especiales, trona, etc."
                   className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
                 />
               </div>
-    
-              <button
-                type="submit" disabled={submitting}
-                className="w-full bg-[#557a59]/95 text-white py-4 rounded-xl font-semibold hover:bg-[#3e5c41] transition-colors disabled:opacity-60 text-sm uppercase tracking-wider"
-                style={{ cursor: submitting ? 'wait' : 'pointer' }}
-              >
-                {submitting ? 'Enviando...' : 'Confirmar asistencia'}
-              </button>
-            </form>
-          )}
-        </div>
-    
-        {/* Popup para añadir niño */}
-        {showChildModal && (
-          <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center px-5"
-            onClick={() => setShowChildModal(false)}
-          >
-            <div
-              className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl max-h-[85vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="font-display italic text-xl text-[#2a3d2c] mb-4 text-center">Añadir niño/a</h3>
-    
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-1">
-                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Nombre*</label>
-                  <input
-                    value={modalName}
-                    onChange={(e) => setModalName(e.target.value)}
-                    placeholder="Nombre del niño/a"
-                    autoFocus
-                    className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-                  />
-                </div>
-    
-                <div className="flex flex-col gap-1">
-                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Edad*</label>
-                  <input
-                    value={modalAge}
-                    onChange={(e) => setModalAge(e.target.value.replace(/\D/g, '').slice(0, 2))}
-                    placeholder="Edad"
-                    inputMode="numeric"
-                    className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-                  />
-                </div>
-    
-                <div className="flex flex-col gap-2">
-                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Tiene alguna intolerancia o dieta especial? *</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[{ val: 'no', label: 'No' }, { val: 'yes', label: 'Sí' }].map(({ val, label }) => (
-                      <label
-                        key={val}
-                        className={`flex items-center justify-center text-center gap-2 px-3 py-2.5 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all leading-tight ${
-                          modalHasIntolerance === val ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="modalHasIntolerance"
-                          value={val}
-                          checked={modalHasIntolerance === val}
-                          onChange={(e) => {
-                            const scrollPos = window.scrollY;
-                            setModalHasIntolerance(e.target.value)
-                            if (e.target.value === 'no') setModalIntolerance('')
-                            requestAnimationFrame(() => {
-                              window.scrollTo({ top: scrollPos, behavior: 'instant' as ScrollBehavior });
-                            });
-                          }}
-                          className="sr-only"
-                        />
-                        {label}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-    
-                {modalHasIntolerance === 'yes' && (
-                  <div className="flex flex-col gap-1 animate-fadeIn">
-                    <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Describe su intolerancia o dieta*</label>
-                    <input
-                      value={modalIntolerance}
-                      onChange={(e) => setModalIntolerance(e.target.value)}
-                      placeholder="Ej: celiaquía, lactosa…"
-                      className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-                    />
-                  </div>
-                )}
-    
-                <div className="flex flex-col gap-2">
-                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué va a comer?*</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { val: 'coctel', label: 'Cóctel' },
-                      { val: 'propia', label: 'Lleva su comida' },
-                    ].map(({ val, label }) => (
-                      <label
-                        key={val}
-                        className={`flex items-center justify-center text-center gap-2 px-3 py-2.5 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all leading-tight ${
-                          modalMeal === val ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="modalMeal"
-                          value={val}
-                          checked={modalMeal === val}
-                          onChange={(e) => setModalMeal(e.target.value)}
-                          className="sr-only"
-                        />
-                        {label}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-    
-                <div className="flex flex-col gap-1">
-                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Observaciones</label>
-                  <textarea
-                    value={modalObservations}
-                    onChange={(e) => setModalObservations(e.target.value)}
-                    rows={2}
-                    placeholder="Necesidades especiales, trona, etc."
-                    className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
-                  />
-                </div>
-              </div>
-    
-              <div className="flex gap-3 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setShowChildModal(false)}
-                  className="flex-1 border border-[#c4ddbf] text-[#3e5c41] rounded-xl py-2.5 text-sm font-medium hover:bg-[#f2f7f0] transition-colors"
-                  style={{ cursor: 'pointer' }}
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  onClick={confirmAddChild}
-                  disabled={!modalName.trim() || !modalAge.trim() || !modalHasIntolerance || !modalMeal || (modalHasIntolerance === 'yes' && !modalIntolerance.trim())}
-                  className="flex-1 bg-[#557a59] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-[#3e5c41] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                  style={{ cursor: modalName.trim() && modalAge.trim() && modalHasIntolerance && modalMeal && (modalHasIntolerance !== 'yes' || modalIntolerance.trim()) ? 'pointer' : 'not-allowed' }}
-                >
-                  Añadir
-                </button>
-              </div>
             </div>
-          </div>
-        )}
-    
-        {/* Popup de campos obligatorios faltantes */}
-        {showErrorModal && (
-          <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[110] flex items-center justify-center p-4 animate-fadeIn"
-            onClick={() => setShowErrorModal(false)}
-          >
-            <div 
-              className="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl text-center border border-red-100 transform transition-all scale-100"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="w-16 h-16 rounded-2xl bg-red-50 text-red-400 flex items-center justify-center mx-auto mb-4 shadow-inner">
-                <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <h3 className="font-display italic text-2xl text-[#2a3d2c] mb-2 font-normal">¡Faltan datos!</h3>
-              <p className="text-[#3e5c41] text-sm mb-7 leading-relaxed">
-                Por favor, revisa el formulario. Hay campos obligatorios importantes sin rellenar que se han marcado en rojo.
-              </p>
+
+            <div className="flex gap-3 mt-6">
               <button
                 type="button"
-                onClick={() => setShowErrorModal(false)}
-                className="w-full bg-[#557a59] text-white rounded-xl py-3 text-sm font-semibold hover:bg-[#3e5c41] transition-all shadow-md shadow-[#557a59]/20 cursor-pointer"
+                onClick={() => setShowChildModal(false)}
+                className="flex-1 border border-[#c4ddbf] text-[#3e5c41] rounded-xl py-2.5 text-sm font-medium hover:bg-[#f2f7f0] transition-colors cursor-pointer"
               >
-                Entendido, voy a revisarlo
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={confirmAddChild}
+                disabled={!modalName.trim() || !modalAge.trim() || !modalHasIntolerance || !modalMeal || (modalHasIntolerance === 'yes' && !modalIntolerance.trim())}
+                className="flex-1 bg-[#557a59] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-[#3e5c41] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{ cursor: modalName.trim() && modalAge.trim() && modalHasIntolerance && modalMeal && (modalHasIntolerance !== 'yes' || modalIntolerance.trim()) ? 'pointer' : 'not-allowed' }}
+              >
+                Añadir
               </button>
             </div>
           </div>
-        )}
-      </Section>
-    )
+        </div>
+      )}
+
+      {/* Modal de error */}
+      {showErrorModal && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-md z-[110] flex items-center justify-center p-4 animate-fadeIn"
+          onClick={() => setShowErrorModal(false)}
+        >
+          <div 
+            className="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl text-center border border-red-100 transform transition-all scale-100"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-16 h-16 rounded-2xl bg-red-50 text-red-400 flex items-center justify-center mx-auto mb-4 shadow-inner">
+              <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="2">
+                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <h3 className="font-display italic text-2xl text-[#2a3d2c] mb-2 font-normal">¡Faltan datos!</h3>
+            <p className="text-[#3e5c41] text-sm mb-7 leading-relaxed">
+              Por favor, revisa el formulario. Hay campos obligatorios importantes sin rellenar que se han marcado en rojo.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowErrorModal(false)}
+              className="w-full bg-[#557a59] text-white rounded-xl py-3 text-sm font-semibold hover:bg-[#3e5c41] transition-all shadow-md shadow-[#557a59]/20 cursor-pointer"
+            >
+              Entendido, voy a revisarlo
+            </button>
+          </div>
+        </div>
+      )}
+    </Section>
+  )
 }
 
 /// ── Contact ─────────────────────────────────────────────────────
