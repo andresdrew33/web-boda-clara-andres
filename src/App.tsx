@@ -1083,6 +1083,7 @@ function Asistencia() {
     busReturn: '',
     sleepover: '',
     message: '',
+    drinks: '',
   })
   const [errors, setErrors] = useState<Record<string, boolean>>({})
   const [showErrorModal, setShowErrorModal] = useState(false)
@@ -1217,7 +1218,10 @@ function Asistencia() {
 
       // Albergue
       if (!form.sleepover) newErrors.sleepover = true
+      //Bebidas
+      if (!form.drinks.trim()) newErrors.drinks = true
     }
+
 
     // 3. Bloqueo en caso de error
     if (Object.keys(newErrors).length > 0) {
@@ -1278,6 +1282,7 @@ function Asistencia() {
       busReturn: '',
       sleepover: '',
       message: '',
+      drinks: '',
     })
   
     // 3. Limpiamos la lista de niños y errores pendientes
@@ -1587,7 +1592,32 @@ function Asistencia() {
                     </div>
                   )}
                 </div>
+                {/* Campo de Bebidas (Solo si asiste) */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">
+                    ¿Qué vas a beber en la fiesta?*
+                  </label>
+                  
+                  <div className="p-4 bg-[#f2f7f0] border border-[#e1eedd] rounded-xl text-[#3e5c41] text-xs leading-relaxed flex flex-col gap-1">
+                    <p>
+                      Queremos asegurarnos que a nadie se le corte el rollo en mitad de la fiesta, por eso necesitamos calcular la bebida que debe haber.
+                    </p>
+                    <p>
+                      Puede ser alcohol o lo que quieras ;)
+                    </p>
+                  </div>
 
+                  <input
+                    name="drinks"
+                    value={form.drinks}
+                    onChange={handleChange}
+                    placeholder="Ej: Ron, agua, CocaCola..."
+                    className={inputErrorClass(
+                      'drinks',
+                      "border rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+                    )}
+                  />
+                </div>
               </div>
             )}
 
