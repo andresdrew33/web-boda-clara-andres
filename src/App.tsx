@@ -648,12 +648,31 @@ function OurStory() {
         <div className="reveal w-full bg-white border border-[#e1eedd] rounded-2xl px-8 py-10 text-center shadow-sm">
           <span className="font-display italic text-[#557a59] text-5xl leading-none select-none">"</span>
           <p className="font-display italic text-[#2a3d2c] text-xl md:text-2xl leading-relaxed mt-1">
-            Nos encontramos por casualidad, nos elegimos por amor, y hoy os invitamos a celebrar con nosotros el día en que lo hacemos para siempre.
+          Hay aventuras que no se planean, simplemente suceden.
           </p>
           <FloralDivider />
-          <p className="text-[#3e5c41] text-sm leading-relaxed mt-2">
-            Desde aquella tarde en que nuestros caminos se cruzaron, cada día ha sido una razón más para querernos. Gracias por ser parte de nuestra historia.
-          </p>
+          {/* Contenedor con espacio vertical entre cada párrafo */}
+          <div className="text-[#3e5c41] text-sm leading-relaxed mt-2 flex flex-col gap-3">
+            <p>
+              La nuestra empezó en el club de montaña —cómo no—, donde una cuerda de escalada hizo que pasáramos de ser dos extraños a ser cordada.
+            </p>
+
+            <p className="font-medium italic">
+              Ella, la barranquista extrovertida; él, el alpinista misterioso.
+            </p>
+
+            <p>
+              Nada hacía prever que la vida acabaría juntándonos. Será cosa del destino, ¿no? Al final, entre rocas, charlas y calimochos, terminamos encontrándonos el uno al otro.
+            </p>
+
+            <p>
+              Si algo tenemos claro es que seguiremos siendo "esa pareja que no para quieta” y, sobre todo, seguiremos siendo el que siempre va por delante en la montaña y la que siempre monta el rápel en los barrancos.
+            </p>
+
+            <p className="font-semibold">
+              Pero, a partir de ahora, lo haremos como marido y mujer.
+            </p>
+          </div>
           <p className="text-[#557a59] text-xs mt-5 tracking-widest uppercase">Clara &amp; Andrés</p>
         </div>
 
