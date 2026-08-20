@@ -514,7 +514,7 @@ function WeddingInfo() {
       <div className="max-w-3xl mx-auto">
         <SectionTitle sub="Detalles del día" title="Lo más importante"/>
         <p className="reveal text-center text-[#3e5c41] text-sm leading-relaxed max-w-lg mx-auto mb-8">
-          Aquí tienes toda la información para que no se te escape ningún detalle de nuestro gran día.
+          Aquí tienes toda la información para que no se te escape ningún detalle de nuestro día.
         </p>
         <div className="flex flex-col gap-3">
           {details.map(({ icon, title, lines }, i) => (
@@ -1084,6 +1084,7 @@ function Asistencia() {
     sleepover: '',
     message: '',
     drinks: '',
+    drinksOther: '',
   })
   const [errors, setErrors] = useState<Record<string, boolean>>({})
   const [showErrorModal, setShowErrorModal] = useState(false)
@@ -1218,8 +1219,11 @@ function Asistencia() {
 
       // Albergue
       if (!form.sleepover) newErrors.sleepover = true
-      //Bebidas
-      if (!form.drinks.trim()) newErrors.drinks = true
+      // Bebidas
+      if (!form.drinks) newErrors.drinks = true
+      if (form.drinks === 'otros' && !form.drinksOther.trim()) {
+        newErrors.drinksOther = true // Valida que rellene qué bebe si marca "Otros"
+      }
     }
 
 
@@ -1233,9 +1237,28 @@ function Asistencia() {
     // 4. Envío de datos
     setErrors({})
     setSubmitting(true)
-    
+
+    // Mapa para traducir el ID del radio a texto limpio
+    const drinksMap: Record<string, string> = {
+      ron: 'Ron',
+      ginebra: 'Ginebra',
+      'ginebra-rosa': 'Ginebra Rosa',
+      vodka: 'Vodka',
+      whisky: 'Whisky',
+      'vino-tinto': 'Vino Tinto',
+      'vino-blanco': 'Vino Blanco',
+      cerveza: 'Cerveza',
+      'cerveza-0': 'Cerveza 0,0',
+      calimocho: 'Calimocho',
+      refrescos: 'Refrescos',
+      agua: 'Agua',
+      otros: 'Otros',
+    }
+
     const formDataToSend = {
       ...form,
+      drinks: drinksMap[form.drinks] || form.drinks, // Guarda "Otros", "Ginebra Rosa", etc.
+      drinksOther: form.drinks === 'otros' ? form.drinksOther.trim() : '', // Texto personalizado sólo si es "otros"
       children: children,
     }
 
@@ -1283,6 +1306,7 @@ function Asistencia() {
       sleepover: '',
       message: '',
       drinks: '',
+      drinksOther: '',
     })
   
     // 3. Limpiamos la lista de niños y errores pendientes
@@ -1597,26 +1621,66 @@ function Asistencia() {
                   <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">
                     ¿Qué vas a beber en la fiesta?*
                   </label>
-                  
-                  <div className="p-4 bg-[#f2f7f0] border border-[#e1eedd] rounded-xl text-[#3e5c41] text-xs leading-relaxed flex flex-col gap-1">
+
+                  <div className="p-4 bg-[#f2f7f0] border border-[#e1eedd] rounded-xl text-[#3e5c41] text-xs leading-relaxed">
                     <p>
                       Queremos asegurarnos que a nadie se le corte el rollo en mitad de la fiesta, por eso necesitamos calcular la bebida que debe haber.
                     </p>
-                    <p>
-                      Puede ser alcohol o lo que quieras ;)
-                    </p>
                   </div>
 
-                  <input
-                    name="drinks"
-                    value={form.drinks}
-                    onChange={handleChange}
-                    placeholder="Ej: Ron, agua, CocaCola..."
-                    className={inputErrorClass(
-                      'drinks',
-                      "border rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-                    )}
-                  />
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {[
+                      { val: 'ron', label: 'Ron' },
+                      { val: 'ginebra', label: 'Ginebra' },
+                      { val: 'ginebra-rosa', label: 'Ginebra Rosa' },
+                      { val: 'vodka', label: 'Vodka' },
+                      { val: 'whisky', label: 'Whisky' },
+                      { val: 'vino-blanco', label: 'Vino Blanco' },
+                      { val: 'vino-tino', label: 'Vino Tinto' },
+                      { val: 'cerveza', label: 'Cerveza' },
+                      { val: 'cerveza-0', label: 'Cerveza 0,0' },
+                      { val: 'calimocho', label: 'Calimocho' },
+                      { val: 'refrescos', label: 'Refrescos' },
+                      { val: 'agua', label: 'Agua' },
+                      { val: 'otros', label: 'Otros' },
+                    ].map(({ val, label }) => {
+                      const isOtros = val === 'otros';
+                  
+                      return (
+                        <label
+                          key={val}
+                          className={`${radioClass(form.drinks === val)} ${
+                            // Si es 'otros', ocupa toda la fila restante y se centra
+                            isOtros ? 'col-span-full justify-self-center max-w-xs w-full text-center' : ''
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="drinks"
+                            value={val}
+                            checked={form.drinks === val}
+                            onChange={handleChange}
+                            className="sr-only"
+                          />
+                          {label}
+                        </label>
+                      );
+                    })}
+                  </div>
+
+                  {form.drinks === 'otros' && (
+                    <input
+                      name="drinksOther"
+                      value={form.drinksOther}
+                      onChange={handleChange}
+                      placeholder="¿Qué te gustaría beber?"
+                      required
+                      className={inputErrorClass(
+                        'drinksOther',
+                        "border rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
+                      )}
+                    />
+                  )}
                 </div>
               </div>
             )}
