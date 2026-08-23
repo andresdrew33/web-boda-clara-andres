@@ -666,7 +666,7 @@ function OurStory() {
             </p>
 
             <p>
-              Si algo tenemos claro es que seguiremos siendo "esa pareja que no para quieta” y, sobre todo, seguiremos siendo el que siempre va por delante en la montaña y la que siempre monta el rápel en los barrancos.
+              Si algo tenemos claro es que seguiremos siendo "esa pareja que no para quieta”, el que siempre abre camino en la montaña y la que siempre va al frente cuando toca mojarse.
             </p>
 
             <p className="font-semibold">
@@ -813,10 +813,7 @@ function Venue() {
             <div>
               <h3 className="font-display text-3xl text-[#2a3d2c] mb-2">Albergue Virgen de Pedrajas</h3>
               <p className="text-[#3e5c41] leading-relaxed"> 
-                Un rincón especial y sencillo a las afueras de Poza de la Sal, bajo la silueta de La Reina Dormida. 
-              </p>
-              <p className="text-[#3e5c41] leading-relaxed">
-              Un espacio rodeado de naturaleza y tranquilidad que convertiremos, por un día, en el escenario de nuestra aventura.
+                Hemos elegido este rincón a las afueras de Poza de la Sal, bajo la silueta de La Reina Dormida, para convertirlo por un día en el escenario de nuestra aventura. 
               </p>
               <br></br>
               <p className="text-[#3e5c41] leading-relaxed">
@@ -833,7 +830,7 @@ function Venue() {
                 </div>
                 <div>
                   <p className="text-[#2a3d2c] font-semibold text-sm">Dirección</p>
-                  <p className="text-[#6d8c70] text-sm">Ctra. Cornudilla s/n, Poza de la Sal</p>
+                  <p className="text-[#6d8c70] text-sm">Ctra. Cornudilla s/n, Poza de la Sal, Burgos</p>
                 </div>
               </div>
 
@@ -899,7 +896,7 @@ function HowToArrive() {
   return (
     <Section id="como-llegar" className="bg-[#f2f7f0]/80">
       <div ref={ref} className="max-w-3xl mx-auto">
-        <SectionTitle sub="Para que no te pierdas" title="¿Cómo llegar?" />
+        <SectionTitle sub="Nos vemos allí" title="¿Cómo llegar?" />
 
         {/* Parking */}
         <div className="reveal flex items-start gap-4 p-6 bg-white rounded-2xl border border-[#e1eedd] mb-6">
@@ -1175,17 +1172,18 @@ function Asistencia() {
   }
 
   const confirmAddChild = () => {
-    if (!modalName.trim() || !modalAge.trim() || !modalHasIntolerance || !modalMeal) return
-    if (modalHasIntolerance === 'yes' && !modalIntolerance.trim()) return
-
+    if (!modalName.trim() || !modalAge.trim() || !modalMeal) return
+    if (modalMeal === 'coctel' && !modalHasIntolerance) return
+    if (modalMeal === 'coctel' && modalHasIntolerance === 'yes' && !modalIntolerance.trim()) return
+  
     setChildren((c) => [
       ...c,
       {
         id: crypto.randomUUID(),
         name: modalName.trim(),
         age: modalAge.trim(),
-        hasIntolerance: modalHasIntolerance,
-        intolerance: modalHasIntolerance === 'yes' ? modalIntolerance.trim() : 'Ninguna',
+        hasIntolerance: modalMeal === 'coctel' ? modalHasIntolerance : 'no',
+        intolerance: modalMeal === 'coctel' && modalHasIntolerance === 'yes' ? modalIntolerance.trim() : 'Ninguna',
         meal: modalMeal,
         observations: modalObservations.trim(),
       },
@@ -1358,7 +1356,8 @@ function Asistencia() {
           <p className="text-[#c4ddbf] uppercase tracking-[0.25em] text-xs mb-3">Confirmación de asistencia</p>
           <h2 className="font-display text-4xl md:text-5xl text-white font-light italic leading-tight">¿Vendrás?</h2>
           <div className="w-14 h-px bg-gradient-to-r from-transparent via-[#c4ddbf] to-transparent mx-auto mt-5" />
-          <p className="text-white/80 text-sm mt-4">Por favor confirma antes del 01/03/2027</p>
+          <p className="text-white/80 text-sm mt-4">Nos encantaría contar contigo si puedes y te apetece, pero entendemos que a veces no sea posible acompañarnos.</p>
+          <p className="text-white/80 font-bold text-sm mt-4">En cualquier caso, agradecemos que nos lo confirmes antes del 01/03/2027</p>
         </div>
 
         {sentStatus === 'success' && (
@@ -1380,7 +1379,7 @@ function Asistencia() {
     <p className="text-[#c4ddbf] text-base mb-8">
       {form.attends === 'yes'
         ? '¡Nos vemos el 12 de junio! :)'
-        : '¡Qué pena que no puedas venir! :('}
+        : '¡Te echaremos de menos! :('}
     </p>
 
             <button
@@ -1476,7 +1475,9 @@ function Asistencia() {
                               <p className="text-[#3e5c41] text-xs mt-1">
                                 {child.meal === 'coctel' ? 'Come el cóctel' : 'Lleva su propia comida'}
                               </p>
-                              <p className="text-[#3e5c41] text-xs mt-0.5">Intolerancias: {child.intolerance}</p>
+                              {child.meal === 'coctel' && child.intolerance && (
+                                <p className="text-[#3e5c41] text-xs mt-0.5">Intolerancias: {child.intolerance}</p>
+                              )}
                               {child.observations && (
                                 <p className="text-[#3e5c41] text-xs mt-0.5">Obs: {child.observations}</p>
                               )}
@@ -1638,12 +1639,12 @@ function Asistencia() {
                 {/* Campo de Bebidas (Solo si asiste) */}
                 <div className="flex flex-col gap-2">
                   <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">
-                    ¿Qué vas a beber en la fiesta?*
+                    ¿Qué vas a beber en la noche?*
                   </label>
 
                   <div className="p-4 bg-[#f2f7f0] border border-[#e1eedd] rounded-xl text-[#3e5c41] text-xs leading-relaxed">
                     <p>
-                      Queremos asegurarnos que a nadie se le corte el rollo en mitad de la fiesta, por eso necesitamos calcular la bebida que debe haber.
+                      Queremos asegurarnos que a nadie se le corte el rollo en mitad de la fiesta, por eso necesitamos calcular la bebida que debe haber tras el cóctel.
                     </p>
                   </div>
 
@@ -1760,7 +1761,42 @@ function Asistencia() {
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
+              <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué va a comer?*</label>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { val: 'coctel', label: 'Cóctel' },
+                  { val: 'propia', label: 'Lleva su comida' },
+                ].map(({ val, label }) => (
+                  <label
+                    key={val}
+                    className={`flex items-center justify-center text-center gap-2 px-3 py-2.5 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all leading-tight ${
+                      modalMeal === val ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="modalMeal"
+                      value={val}
+                      checked={modalMeal === val}
+                      onChange={(e) => {
+                        const value = e.target.value
+                        setModalMeal(value)
+                        if (value !== 'coctel') {
+                          setModalHasIntolerance('')
+                          setModalIntolerance('')
+                        }
+                      }}
+                      className="sr-only"
+                    />
+                    {label}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {modalMeal === 'coctel' && (
+              <div className="flex flex-col gap-2 animate-fadeIn">
                 <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Tiene alguna intolerancia o dieta especial? *</label>
                 <div className="grid grid-cols-2 gap-2">
                   {[{ val: 'no', label: 'No' }, { val: 'yes', label: 'Sí' }].map(({ val, label }) => (
@@ -1790,56 +1826,30 @@ function Asistencia() {
                   ))}
                 </div>
               </div>
+            )}
 
-              {modalHasIntolerance === 'yes' && (
-                <div className="flex flex-col gap-1 animate-fadeIn">
-                  <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Describe su intolerancia o dieta*</label>
-                  <input
-                    value={modalIntolerance}
-                    onChange={(e) => setModalIntolerance(e.target.value)}
-                    placeholder="Ej: celiaquía, lactosa…"
-                    className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
-                  />
-                </div>
-              )}
-
-              <div className="flex flex-col gap-2">
-                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">¿Qué va a comer?*</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { val: 'coctel', label: 'Cóctel' },
-                    { val: 'propia', label: 'Lleva su comida' },
-                  ].map(({ val, label }) => (
-                    <label
-                      key={val}
-                      className={`flex items-center justify-center text-center gap-2 px-3 py-2.5 rounded-xl border-2 cursor-pointer text-sm font-medium transition-all leading-tight ${
-                        modalMeal === val ? 'border-[#557a59] bg-[#557a59]/10 text-[#2a3d2c]' : 'border-[#c4ddbf] text-[#3e5c41] hover:border-[#557a59]'
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="modalMeal"
-                        value={val}
-                        checked={modalMeal === val}
-                        onChange={(e) => setModalMeal(e.target.value)}
-                        className="sr-only"
-                      />
-                      {label}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Observaciones</label>
-                <textarea
-                  value={modalObservations}
-                  onChange={(e) => setModalObservations(e.target.value)}
-                  rows={2}
-                  placeholder="Necesidades especiales, trona, etc."
-                  className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
+            {modalMeal === 'coctel' && modalHasIntolerance === 'yes' && (
+              <div className="flex flex-col gap-1 animate-fadeIn">
+                <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Describe su intolerancia o dieta*</label>
+                <input
+                  value={modalIntolerance}
+                  onChange={(e) => setModalIntolerance(e.target.value)}
+                  placeholder="Ej: celiaquía, lactosa…"
+                  className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2]"
                 />
               </div>
+            )}
+
+            <div className="flex flex-col gap-1">
+              <label className="text-[#3e5c41] text-xs font-semibold uppercase tracking-wider">Observaciones</label>
+              <textarea
+                value={modalObservations}
+                onChange={(e) => setModalObservations(e.target.value)}
+                rows={2}
+                placeholder="Necesidades especiales, trona, etc."
+                className="border border-[#c4ddbf] rounded-xl px-4 py-3 text-[#2a3d2c] text-sm focus:outline-none focus:border-[#557a59] focus:ring-1 focus:ring-[#557a59] transition placeholder:text-[#b0c9b2] resize-none"
+              />
+            </div>
             </div>
 
             <div className="flex gap-3 mt-6">
@@ -1853,10 +1863,24 @@ function Asistencia() {
               <button
                 type="button"
                 onClick={confirmAddChild}
-                disabled={!modalName.trim() || !modalAge.trim() || !modalHasIntolerance || !modalMeal || (modalHasIntolerance === 'yes' && !modalIntolerance.trim())}
-                className="flex-1 bg-[#557a59] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-[#3e5c41] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{ cursor: modalName.trim() && modalAge.trim() && modalHasIntolerance && modalMeal && (modalHasIntolerance !== 'yes' || modalIntolerance.trim()) ? 'pointer' : 'not-allowed' }}
-              >
+                disabled={
+                  !modalName.trim() ||
+                  !modalAge.trim() ||
+                  !modalMeal ||
+                  (modalMeal === 'coctel' && !modalHasIntolerance) ||
+                  (modalMeal === 'coctel' && modalHasIntolerance === 'yes' && !modalIntolerance.trim())
+                }                className="flex-1 bg-[#557a59] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-[#3e5c41] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{
+                  cursor:
+                    modalName.trim() &&
+                    modalAge.trim() &&
+                    modalMeal &&
+                    (modalMeal !== 'coctel' || modalHasIntolerance) &&
+                    (modalMeal !== 'coctel' || modalHasIntolerance !== 'yes' || modalIntolerance.trim())
+                      ? 'pointer'
+                      : 'not-allowed',
+                }}
+                >
                 Añadir
               </button>
             </div>
