@@ -1050,8 +1050,7 @@ function PhotoUpload() {
 // ── Playlist Section ────────────────────────────────────────────
 function PlaylistSection() {
   const ref = useReveal()
-  const spotifyUrl = 'https://open.spotify.com/playlist/5YBr6pdfDy95BYI4ZrqsOP?si=ec0DeZ9tSxe5z2SyOsXGgw&utm_source=copy-link&pt=62ebb168027c18795ed8d9f15e367ba5&pi=__9p9ONwQg-kz&sci=spotify%3Acard-config%3A5ew24bTu2yCxjiwknYsL2V'
-
+  const spotifyUrl = 'https://open.spotify.com/playlist/5YBr6pdfDy95BYI4ZrqsOP'
   return (
     <Section id="playlist" className="bg-[#fdfaf5]/80 relative overflow-hidden">
       {/* Notas musicales decorativas, muy sutiles */}
@@ -1646,6 +1645,9 @@ function Asistencia() {
                     <p>
                       Queremos asegurarnos que a nadie se le corte el rollo en mitad de la fiesta, por eso necesitamos calcular la bebida que debe haber tras el cóctel.
                     </p>
+                    <p className="text-center">
+                      (Cerveza y calimocho no van a faltar, tranqui)
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -1657,9 +1659,9 @@ function Asistencia() {
                       { val: 'whisky', label: 'Whisky' },
                       { val: 'vino-blanco', label: 'Vino Blanco' },
                       { val: 'vino-tino', label: 'Vino Tinto' },
-                      { val: 'cerveza', label: 'Cerveza' },
+                      // { val: 'cerveza', label: 'Cerveza' },
                       { val: 'cerveza-0', label: 'Cerveza 0,0' },
-                      { val: 'calimocho', label: 'Calimocho' },
+                      // { val: 'calimocho', label: 'Calimocho' },
                       { val: 'refrescos', label: 'Refrescos' },
                       { val: 'agua', label: 'Agua' },
                       { val: 'otros', label: 'Otros' },
