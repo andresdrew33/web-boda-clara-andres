@@ -933,7 +933,7 @@ function HowToArrive() {
         Habrá un autobús desde Burgos, con dos puntos de salida. 
         </p>
         <p className="text-[#3e5c41] text-sm leading-relaxed">
-        La vuelta se hará en dos turnos: a las 23:00h y a las 02:00h.
+        La vuelta se hará en dos turnos: a las 23:00h y a las 01:00h.
       </p>
     </div>
   </div>
@@ -965,10 +965,6 @@ function HowToArrive() {
   </div>
 </div>
 
-          {/* <p className="text-[#557a59] text-xs mt-5 text-center">
-            Autobús de vuelta a Burgos: 11:00h y 02:00h
-          </p> */}
-        {/* </div> */}
       </div>
     </Section>
   )
@@ -1607,7 +1603,7 @@ function Asistencia() {
                         <div className="grid grid-cols-2 gap-3">
                           {[
                             { val: '23:00', label: '23:00h' },
-                            { val: '02:00', label: '02:00h' },
+                            { val: '01:00', label: '01:00h' },
                           ].map(({ val, label }) => (
                             <label key={val} className={`${radioClass(form.busReturn === val)} ${errors.busReturn ? '!border-red-300 bg-red-50/20' : ''}`}>
                               <input type="radio" name="busReturn" value={val} checked={form.busReturn === val} onChange={handleChange} className="sr-only" />
