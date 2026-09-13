@@ -1637,12 +1637,12 @@ function Asistencia() {
                       <p>
                         Recuerda que se trata de un albergue con habitaciones y baños compartidos (intentaremos que estéis lo más cómodos posibles).
                       </p>
-                      <p className="font-semibold">
+                      {/* <p className="font-semibold">
                         El alojamiento tiene un coste de 5€/persona.
                       </p>
                       <p>
                         Para terminar de confirmar la cama escríbenos a cualquiera de los dos :)
-                      </p>
+                      </p> */}
                     </div>
                   )}
                 </div>
