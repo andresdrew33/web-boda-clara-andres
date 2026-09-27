@@ -1046,7 +1046,7 @@ function PhotoUpload() {
 // ── Playlist Section ────────────────────────────────────────────
 function PlaylistSection() {
   const ref = useReveal()
-  const spotifyUrl = 'https://open.spotify.com/playlist/0XZyUH2F1dj1gRxy4GZbar?si=jklkOfpJQSmJI7_o5ku6Ag&utm_source=whatsapp&pt=7767d78bbaff07b0aa328ec1ff618417&pi=feiEcm77QUyei'  
+  const spotifyUrl = 'https://open.spotify.com/playlist/0XZyUH2F1dj1gRxy4GZbar?si=HYtULZ8RS7WM_SevCuzWwA&utm_source=copy-link&pt=75e97e1aca867ec3cfcaf7c9e84f6ddb&pi=dvBU5JXPSECU6'  
   return (
     <Section id="playlist" className="bg-[#fdfaf5]/80 relative overflow-hidden">
       {/* Notas musicales decorativas, muy sutiles */}
